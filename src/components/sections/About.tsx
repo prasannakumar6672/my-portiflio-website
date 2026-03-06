@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { personalInfo } from "@/lib/data";
-import { Card } from "../ui/Card";
 
 export const About = () => {
     const stats = [
@@ -14,7 +13,7 @@ export const About = () => {
     ];
 
     return (
-        <section id="about" className="py-24 relative overflow-hidden">
+        <section id="about" className="py-32 md:py-24 relative overflow-hidden">
             <div className="container mx-auto px-6">
                 <div className="flex flex-col lg:flex-row gap-16 items-center">
                     {/* Visual Side */}
@@ -44,9 +43,9 @@ export const About = () => {
                         </div>
 
                         {/* Float Label */}
-                        <div className="absolute -bottom-6 -right-6 lg:right-0 glass px-6 py-4 rounded-2xl shadow-2xl border-accent/20">
-                            <span className="text-accent font-bold text-2xl block">01 —</span>
-                            <span className="text-foreground/60 text-sm font-medium tracking-wider">ABOUT ME</span>
+                        <div className="absolute -bottom-8 right-0 lg:-bottom-6 lg:right-0 glass px-6 py-4 rounded-2xl shadow-2xl border-accent/20">
+                            <span className="text-accent font-bold text-2xl block tracking-tighter">01 —</span>
+                            <span className="text-foreground/60 text-[10px] sm:text-sm font-medium tracking-wider">ABOUT ME</span>
                         </div>
                     </motion.div>
 

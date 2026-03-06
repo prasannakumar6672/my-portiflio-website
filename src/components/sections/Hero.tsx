@@ -20,27 +20,40 @@ const ROLES = [
 const Typewriter = () => {
     const [roleIdx, setRoleIdx] = useState(0);
     const [text, setText] = useState("");
-    const [deleting, setDeleting] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     useEffect(() => {
-        const full = ROLES[roleIdx];
-        const speed = deleting ? 35 : 70;
-        const t = setTimeout(() => {
-            if (!deleting) {
-                const next = full.slice(0, text.length + 1);
-                setText(next);
-                if (next === full) setTimeout(() => setDeleting(true), 1800);
+        const currentRole = ROLES[roleIdx];
+
+        // Determine timing
+        let speed = 80;
+        if (isDeleting) speed = 40;
+        if (!isDeleting && text === currentRole) speed = 2000; // Pause at top
+        if (isDeleting && text === "") speed = 500; // Pause at bottom
+
+        const timeout = setTimeout(() => {
+            if (!isDeleting) {
+                // Handle Typing
+                if (text === currentRole) {
+                    // Start deleting after pause
+                    setIsDeleting(true);
+                } else {
+                    setText(currentRole.slice(0, text.length + 1));
+                }
             } else {
-                const next = full.slice(0, text.length - 1);
-                setText(next);
-                if (next === "") {
-                    setDeleting(false);
-                    setRoleIdx((i) => (i + 1) % ROLES.length);
+                // Handle Deleting
+                if (text === "") {
+                    // Switch to next role after pause
+                    setIsDeleting(false);
+                    setRoleIdx((prev) => (prev + 1) % ROLES.length);
+                } else {
+                    setText(currentRole.slice(0, text.length - 1));
                 }
             }
         }, speed);
-        return () => clearTimeout(t);
-    }, [text, deleting, roleIdx]);
+
+        return () => clearTimeout(timeout);
+    }, [text, isDeleting, roleIdx]);
 
     return (
         <span className="font-display text-2xl md:text-3xl font-semibold">
@@ -129,7 +142,7 @@ const GridOverlay = () => (
 const AnimatedName = ({ name }: { name: string }) => {
     const chars = name.split("");
     return (
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-tight select-none">
+        <h1 className="text-[2.6rem] xs:text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-[1.1] select-none">
             {chars.map((char, i) => (
                 <motion.span
                     key={i}
@@ -168,7 +181,7 @@ export const Hero = () => {
     };
 
     return (
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-32 md:pb-20">
             {/* Layers */}
             <GridOverlay />
             <Particles />
@@ -192,7 +205,7 @@ export const Hero = () => {
                     variants={containerVariants}
                     initial="hidden"
                     animate="show"
-                    className="flex flex-col items-center gap-5"
+                    className="flex flex-col items-center gap-4 md:gap-5"
                 >
                     {/* Greeting */}
                     <motion.p variants={fadeUp} className="text-accent text-base md:text-lg font-medium tracking-widest uppercase">

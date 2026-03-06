@@ -54,3 +54,11 @@ export interface Achievement {
   icon: string;
 }
 
+export interface Education {
+  school: string;
+  degree: string;
+  duration: string;
+  content: string;
+  logo?: string;
+}
+

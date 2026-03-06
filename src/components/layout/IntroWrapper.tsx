@@ -13,7 +13,15 @@ export const IntroWrapper = ({ children }: { children: React.ReactNode }) => {
     return (
         <>
             {!introDone && <Intro onComplete={handleComplete} />}
-            {children}
+            <div
+                className="transition-opacity duration-700 ease-in-out"
+                style={{
+                    opacity: introDone ? 1 : 0,
+                    visibility: introDone ? "visible" : "hidden"
+                }}
+            >
+                {children}
+            </div>
         </>
     );
 };

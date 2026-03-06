@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 
 /* ─── Sequence of lines that animate in one after another ─────────────── */
 const LINES = [
-    { text: "Hello, World.", delay: 0, size: "text-5xl md:text-7xl", accent: false },
-    { text: "Welcome to my space.", delay: 0.9, size: "text-2xl md:text-4xl", accent: false },
-    { text: "Built for coders.", delay: 1.7, size: "text-lg md:text-2xl", accent: true },
+    { text: "Hello, World.", delay: 0, size: "text-4xl md:text-7xl", accent: false },
+    { text: "Welcome to my space.", delay: 0.9, size: "text-xl md:text-4xl", accent: false },
+    { text: "Built for coders.", delay: 1.7, size: "text-base md:text-2xl", accent: true },
 ];
 
 /* ─── Single animated line ────────────────────────────────────────────── */

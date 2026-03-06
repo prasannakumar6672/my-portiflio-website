@@ -4,6 +4,7 @@ import {
     Project,
     Experience,
     Achievement,
+    Education,
 } from "../types";
 
 export const personalInfo: PersonalInfo = {
@@ -167,5 +168,15 @@ export const achievements: Achievement[] = [
         issuer: "Coursera",
         date: "2024",
         icon: "Award",
+    },
+];
+
+export const education: Education[] = [
+    {
+        school: "CMR Technical Campus",
+        degree: "B.Tech — Computer Science & Engineering (AI & ML)",
+        duration: "2023 — 2027",
+        content: "Current CGPA: 8.24. Focusing on advanced AI models, full-stack microservices, and system architecture.",
+        logo: "/images/college logo.png",
     },
 ];
