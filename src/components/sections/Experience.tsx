@@ -19,7 +19,7 @@ export const Experience = () => {
 
                 <div className="relative max-w-4xl mx-auto">
                     {/* Vertical Line */}
-                    <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/10 to-transparent lg:block hidden" />
+                    <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-transparent via-accent/40 to-transparent lg:block hidden" />
 
                     <div className="space-y-12">
                         {experience.map((exp, i) => (

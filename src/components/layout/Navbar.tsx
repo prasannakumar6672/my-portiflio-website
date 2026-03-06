@@ -166,11 +166,19 @@ export const Navbar = () => {
                         <motion.a
                             key={link.name}
                             href={link.href}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                const targetId = link.href.substring(1);
+                                const element = document.getElementById(targetId);
+                                if (element) {
+                                    element.scrollIntoView({ behavior: "smooth" });
+                                }
+                            }}
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: i * 0.08 }}
                             className={cn(
-                                "relative text-sm font-medium transition-colors",
+                                "relative text-sm font-medium transition-colors cursor-pointer",
                                 activeSection === link.href
                                     ? "text-accent"
                                     : isDark ? "text-foreground/60 hover:text-foreground" : "text-slate-500 hover:text-slate-900"
@@ -193,7 +201,12 @@ export const Navbar = () => {
                     <ThemeToggle />
 
                     {/* Hire Me CTA */}
-                    <a href="#contact" className="hidden md:block">
+                    <a href="#contact"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                        className="hidden md:block">
                         <Button size="sm" variant="outline">
                             Hire Me
                         </Button>
@@ -239,9 +252,17 @@ export const Navbar = () => {
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: i * 0.08 }}
-                                    onClick={() => setMobileMenuOpen(false)}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setMobileMenuOpen(false);
+                                        const targetId = link.href.substring(1);
+                                        const element = document.getElementById(targetId);
+                                        if (element) {
+                                            element.scrollIntoView({ behavior: "smooth" });
+                                        }
+                                    }}
                                     className={cn(
-                                        "text-4xl font-display font-bold hover:text-accent transition-colors",
+                                        "text-4xl font-display font-bold hover:text-accent transition-colors cursor-pointer",
                                         isDark ? "text-foreground" : "text-slate-900"
                                     )}
                                 >

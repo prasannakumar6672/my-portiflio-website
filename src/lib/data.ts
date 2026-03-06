@@ -4,7 +4,6 @@ import {
     Project,
     Experience,
     Achievement,
-    Testimonial,
 } from "../types";
 
 export const personalInfo: PersonalInfo = {
@@ -14,11 +13,10 @@ export const personalInfo: PersonalInfo = {
     avatar: "/images/about.jpeg",
     email: "prasannakumar6672@gmail.com",
     location: "Hyderabad, India",
-    resumeUrl: "/resume.pdf",
+    resumeUrl: "/resume/prasanna-kumar-resume.pdf",
     socials: {
         github: "https://github.com/prasannakumar6672",
         linkedin: "https://linkedin.com/in/prashuyadav360",
-        twitter: "https://twitter.com",
         email: "mailto:prasannakumar6672@gmail.com",
     },
 };
@@ -55,25 +53,71 @@ export const techStack: TechCategory[] = [
 
 export const projects: Project[] = [
     {
-        id: "road-damage-detection",
-        title: "AI Road Damage & Civic Complaint System",
-        tagline: "Real-time pothole & crack detection with smart reporting",
-        description: "A full-stack platform with role-based JWT authentication for citizens and officials. Integrates Roboflow pretrained API to detect potholes, cracks, and erosion with severity scoring. Uses RESTful MongoDB schema and complaint lifecycle tracking.",
-        image: "/images/projects/road.jpg",
-        tech: ["React.js", "Node.js", "Express.js", "MongoDB", "JWT", "Roboflow API", "Multer", "Cloudinary"],
-        githubUrl: "https://github.com",
-        liveUrl: "https://neurax2-0.vercel.app",
-        featured: true,
+        id: "water-body-encroachment",
+        title: "AI Water Body Encroachment Detection",
+        tagline: "Computer vision system that detects illegal water body encroachments using satellite imagery",
+        description: "A role-based AI geospatial system for monitoring water body encroachment with interactive dashboards. Uses computer vision and satellite imagery analysis to detect illegal constructions near water bodies, enabling authorities to take timely action.",
+        image: "/images/water bodies encroachment detection system.png",
+        tech: ["Python", "OpenCV", "ML", "Web Dashboard"],
+        githubUrl: "https://github.com/prasannakumar6672/water_Bodies_Encroachment_Detection",
+        liveUrl: "https://water-bodies-encroachment-detection.vercel.app/",
+        features: [
+            "Satellite imagery analysis with OpenCV",
+            "Real-time encroachment detection",
+            "Role-based access control (Public, Officer, Admin)",
+            "Interactive geospatial dashboard",
+            "Historical deployment monitoring"
+        ]
     },
     {
-        id: "vital-agent",
-        title: "Vital Agent — AI Health Risk Predictor",
-        tagline: "AI-powered health risk scoring with 7-day vitals analysis",
-        description: "Developed an AI health risk prediction system using TensorFlow LSTM on 7-day sequential vitals data. Generates probabilistic risk scores (0–1) and integrates a trained .h5 model into a Python backend for real-time inference with Gemini API recommendations.",
-        image: "/images/projects/vitals.jpg",
-        tech: ["Python", "TensorFlow", "LSTM", "REST APIs", "Gemini API"],
+        id: "road-damage-detection",
+        title: "AI Road Damage Detection & Civic Reporting",
+        tagline: "Smart city platform that detects road damage and allows citizens to report civic issues",
+        description: "A smart city platform powered by AI vision that automatically detects road damage from images and enables citizens to report civic issues. Features a comprehensive reporting dashboard for municipal authorities to prioritize repairs.",
+        image: "/images/ai road damage and civic complaint system.jpeg",
+        tech: ["Next.js", "Node.js", "AI Vision"],
+        githubUrl: "https://github.com/prasannakumar6672/AI-Road-Damage-Civic-Complaint-System",
+        liveUrl: "https://ai-road-damage-civic-complaint-syst.vercel.app/",
+        features: [
+            "AI-powered road damage identification",
+            "Citizen reporting interface",
+            "Municipal authority dashboard",
+            "Automated triage and prioritization",
+            "Real-time status tracking for reports"
+        ]
+    },
+    {
+        id: "ai-rag-chatbot",
+        title: "AI Chatbot with Retrieval Augmented Generation",
+        tagline: "AI assistant that answers questions using document retrieval and LLM reasoning",
+        description: "An intelligent AI assistant that leverages Retrieval Augmented Generation (RAG) to answer questions by combining document retrieval with large language model reasoning. Users can query custom knowledge bases built from their own documents for accurate, context-aware responses.",
+        image: "",
+        tech: ["Python", "LangChain", "Vector DB", "LLM"],
         githubUrl: "https://github.com/prasannakumar6672",
-        liveUrl: "https://example.com",
+        features: [
+            "Multi-document knowledge retrieval",
+            "Context-aware LLM reasoning",
+            "Vector database integration",
+            "Custom knowledge base uploading",
+            "Streaming response interface"
+        ]
+    },
+    {
+        id: "neurax-hackathon",
+        title: "NeuraX Hackathon Website",
+        tagline: "Modern hackathon event website with animated UI and responsive design",
+        description: "A modern hackathon event website featuring a stunning animated UI with Framer Motion transitions, fully responsive design, and an engaging experience for participants and organizers alike.",
+        image: "/images/neurax_hackthon website.png",
+        tech: ["Next.js", "Tailwind CSS", "Framer Motion"],
+        githubUrl: "https://github.com/prasannakumar6672/Neurax2.0-Hackthon-Website",
+        liveUrl: "https://neurax2-0.vercel.app",
+        features: [
+            "Modern animated UI with Framer Motion",
+            "Fully responsive design",
+            "Event timeline and schedule",
+            "Participant registration integration",
+            "Interactive FAQ and info sections"
+        ]
     },
 ];
 
@@ -123,14 +167,5 @@ export const achievements: Achievement[] = [
         issuer: "Coursera",
         date: "2024",
         icon: "Award",
-    },
-];
-
-export const testimonials: Testimonial[] = [
-    {
-        name: "CMR Technical Campus",
-        role: "B.Tech — Computer Science & Engineering (AI & ML)",
-        content: "CGPA: 8.24 | 2023 – 2027 | Consistently excelling in AI, ML, and full-stack development coursework.",
-        avatar: "/images/testimonials/cmr.jpg",
     },
 ];

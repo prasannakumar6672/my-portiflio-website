@@ -9,7 +9,6 @@ export interface PersonalInfo {
   socials: {
     github: string;
     linkedin: string;
-    twitter?: string;
     email: string;
   };
 }
@@ -35,12 +34,8 @@ export interface Project {
   image: string;
   tech: string[];
   githubUrl: string;
-  liveUrl: string;
-  featured?: boolean;
-  stats?: {
-    stars: number;
-    forks: number;
-  };
+  liveUrl?: string;
+  features?: string[];
 }
 
 export interface Experience {
@@ -59,18 +54,3 @@ export interface Achievement {
   icon: string;
 }
 
-export interface Testimonial {
-  name: string;
-  role: string;
-  content: string;
-  avatar: string;
-}
-
-export interface GitHubStats {
-  totalRepos: number;
-  stars: number;
-  forks: number;
-  followers: number;
-  contributionData: { date: string; count: number }[];
-  languages: { name: string; percentage: number; color: string }[];
-}

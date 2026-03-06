@@ -7,6 +7,7 @@ import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { IntroWrapper } from "@/components/layout/IntroWrapper";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-display",
@@ -50,6 +51,11 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  icons: {
+    icon: "/images/logo.jpeg",
+    shortcut: "/images/logo.jpeg",
+    apple: "/images/logo.jpeg",
+  },
 };
 
 export default function RootLayout({
@@ -67,7 +73,6 @@ export default function RootLayout({
     sameAs: [
       personalInfo.socials.github,
       personalInfo.socials.linkedin,
-      personalInfo.socials.twitter,
     ],
   };
 
@@ -84,12 +89,14 @@ export default function RootLayout({
       >
         <SmoothScroll />
         <ThemeProvider>
-          <ScrollProgress />
-          <Navbar />
-          <div className="noise min-h-screen gradient-mesh">
-            {children}
-          </div>
-          <Footer />
+          <IntroWrapper>
+            <ScrollProgress />
+            <Navbar />
+            <div className="noise min-h-screen gradient-mesh">
+              {children}
+            </div>
+            <Footer />
+          </IntroWrapper>
         </ThemeProvider>
       </body>
     </html>

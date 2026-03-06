@@ -9,6 +9,7 @@ import { SocialLink } from "../ui/SocialLink";
 
 // ─── Roles typewriter ─────────────────────────────────────────────────────
 const ROLES = [
+    "Software Engineer",
     "Full Stack Developer",
     "AI / ML Engineer",
     "Cloud Explorer",

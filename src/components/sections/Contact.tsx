@@ -10,13 +10,39 @@ import { personalInfo } from "@/lib/data";
 export const Contact = () => {
     const [formState, setFormState] = useState<"idle" | "loading" | "success" | "error">("idle");
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setFormState("loading");
-        // Simulate API call
-        setTimeout(() => {
-            setFormState("success");
-        }, 2000);
+
+        const formData = new FormData(e.currentTarget);
+
+        // Add your Web3Forms Access Key here or in .env.local as NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY
+        // You can get a free access key from https://web3forms.com/
+        formData.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || "YOUR_ACCESS_KEY_HERE");
+
+        const object = Object.fromEntries(formData);
+        const json = JSON.stringify(object);
+
+        try {
+            const response = await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json"
+                },
+                body: json
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                setFormState("success");
+            } else {
+                setFormState("error");
+            }
+        } catch (error) {
+            console.error("Form submission error:", error);
+            setFormState("error");
+        }
     };
 
     return (
@@ -75,25 +101,42 @@ export const Contact = () => {
                                         Send Another Message
                                     </Button>
                                 </motion.div>
+                            ) : formState === "error" ? (
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    className="py-20 text-center space-y-6"
+                                >
+                                    <div className="w-20 h-20 bg-red-500/20 text-red-500 rounded-full flex items-center justify-center mx-auto ring-8 ring-red-500/10">
+                                        <span className="text-4xl font-black">!</span>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <h3 className="text-2xl font-bold text-foreground">Something went wrong!</h3>
+                                        <p className="text-foreground/40">Please try again later or contact me directly via email.</p>
+                                    </div>
+                                    <Button variant="outline" onClick={() => setFormState("idle")}>
+                                        Try Again
+                                    </Button>
+                                </motion.div>
                             ) : (
                                 <form onSubmit={handleSubmit} className="space-y-6">
                                     <div className="grid md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
                                             <label className="text-[10px] uppercase tracking-widest font-bold text-foreground/40 ml-1">Your Name</label>
-                                            <input required className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-foreground placeholder:text-foreground/20 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all" placeholder="John Doe" />
+                                            <input name="name" required className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-foreground placeholder:text-foreground/20 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all" placeholder="John Doe" />
                                         </div>
                                         <div className="space-y-2">
                                             <label className="text-[10px] uppercase tracking-widest font-bold text-foreground/40 ml-1">Email Address</label>
-                                            <input type="email" required className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-foreground placeholder:text-foreground/20 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all" placeholder="john@example.com" />
+                                            <input name="email" type="email" required className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-foreground placeholder:text-foreground/20 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all" placeholder="john@example.com" />
                                         </div>
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-[10px] uppercase tracking-widest font-bold text-foreground/40 ml-1">Subject</label>
-                                        <input required className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-foreground placeholder:text-foreground/20 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all" placeholder="Project Inquiry" />
+                                        <input name="subject" required className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-foreground placeholder:text-foreground/20 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all" placeholder="Project Inquiry" />
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-[10px] uppercase tracking-widest font-bold text-foreground/40 ml-1">Message</label>
-                                        <textarea required rows={4} className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-foreground placeholder:text-foreground/20 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all resize-none" placeholder="Tell me about your project..." />
+                                        <textarea name="message" required rows={4} className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-foreground placeholder:text-foreground/20 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all resize-none" placeholder="Tell me about your project..." />
                                     </div>
                                     <Button type="submit" className="w-full h-14" isLoading={formState === "loading"}>
                                         Send Message <Send className="ml-2 w-4 h-4" />

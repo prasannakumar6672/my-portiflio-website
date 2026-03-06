@@ -7,9 +7,9 @@ import { Card } from "../ui/Card";
 
 export const About = () => {
     const stats = [
-        { label: "Years Experience", value: "3+" },
-        { label: "Projects Completed", value: "20+" },
-        { label: "Contributions", value: "5+" },
+        { label: "Hackthons Participated", value: "9+" },
+        { label: "Projects Completed", value: "5+" },
+        { label: "Contributions", value: "6+" },
         { label: "Available", value: "Now" },
     ];
 
@@ -59,13 +59,14 @@ export const About = () => {
                             className="space-y-4"
                         >
                             <h2 className="text-4xl md:text-5xl font-black text-foreground">
-                                Designing Digital <br />
-                                <span className="text-accent">Evolution.</span>
+                                Building Intelligent <br />
+                                <span className="text-accent">Systems.</span>
                             </h2>
                             <p className="text-foreground/60 leading-relaxed text-lg">
-                                I am a passionate architect of the web, blending technical mastery with aesthetic intuition.
-                                My philosophy is simple: build things that last, inspire, and solve real-world problems
-                                through elegant code and human-centric design.
+                                I'm <strong className="text-foreground/90">Prasanna Kumar</strong> — a Full Stack Developer and AI/ML enthusiast pursuing
+                                B.Tech in Computer Science (AI & ML) at CMR Technical Campus, Hyderabad.
+                                I build production-ready AI-powered systems and scalable web platforms that solve real-world problems —
+                                from satellite-based encroachment detection to smart city civic reporting tools.
                             </p>
                         </motion.div>
 
@@ -76,7 +77,7 @@ export const About = () => {
                             viewport={{ once: true }}
                             className="border-l-4 border-accent pl-6 py-2 italic text-foreground/80 text-xl font-medium"
                         >
-                            &quot;Code is the paintbrush; the browser is the canvas; performance is the masterpiece.&quot;
+                            &quot;AI isn&apos;t the future — it&apos;s the present. My job is to build it responsibly.&quot;
                         </motion.blockquote>
 
                         {/* Quick Stats */}

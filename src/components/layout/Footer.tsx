@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUp, Github, Linkedin, Twitter, Mail } from "lucide-react";
+import { ArrowUp, Github, Linkedin, Mail } from "lucide-react";
 import { personalInfo } from "@/lib/data";
 import { Logo } from "../ui/Logo";
 import { SocialLink } from "../ui/SocialLink";
@@ -28,7 +28,6 @@ export const Footer = () => {
                     <div className="flex justify-center gap-6">
                         <SocialLink href={personalInfo.socials.github} icon={<Github />} label="GitHub" variant="footer" />
                         <SocialLink href={personalInfo.socials.linkedin} icon={<Linkedin />} label="LinkedIn" variant="footer" />
-                        <SocialLink href={personalInfo.socials.twitter} icon={<Twitter />} label="Twitter" variant="footer" />
                         <SocialLink href={personalInfo.socials.email} icon={<Mail />} label="Email" variant="footer" />
                     </div>
 
@@ -49,10 +48,6 @@ export const Footer = () => {
                     <p className="text-foreground/30 text-xs text-center">
                         © {new Date().getFullYear()} {personalInfo.name}. All rights reserved.
                     </p>
-                    <div className="flex gap-6">
-                        <a href="#" className="text-foreground/30 hover:text-foreground transition-colors text-xs">Privacy Policy</a>
-                        <a href="#" className="text-foreground/30 hover:text-foreground transition-colors text-xs">Terms of Service</a>
-                    </div>
                 </div>
             </div>
         </footer>

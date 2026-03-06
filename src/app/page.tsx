@@ -1,11 +1,12 @@
 import { Hero } from "@/components/sections/Hero";
-import { About } from "@/components/sections/About";
-import { TechStack } from "@/components/sections/TechStack";
-import { Projects } from "@/components/sections/Projects";
-import { Experience } from "@/components/sections/Experience";
-import { GitHubStats } from "@/components/sections/GitHubStats";
-import { Achievements } from "@/components/sections/Achievements";
-import { Contact } from "@/components/sections/Contact";
+import dynamic from "next/dynamic";
+
+const About = dynamic(() => import("@/components/sections/About").then((mod) => mod.About));
+const TechStack = dynamic(() => import("@/components/sections/TechStack").then((mod) => mod.TechStack));
+const Projects = dynamic(() => import("@/components/sections/Projects").then((mod) => mod.Projects));
+const Experience = dynamic(() => import("@/components/sections/Experience").then((mod) => mod.Experience));
+const Achievements = dynamic(() => import("@/components/sections/Achievements").then((mod) => mod.Achievements));
+const Contact = dynamic(() => import("@/components/sections/Contact").then((mod) => mod.Contact));
 
 export default function Home() {
   return (
@@ -15,7 +16,6 @@ export default function Home() {
       <TechStack />
       <Projects />
       <Experience />
-      <GitHubStats />
       <Achievements />
       <Contact />
     </main>
