@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Send, Mail, MapPin, Phone, Github, Linkedin, Twitter, CheckCircle2 } from "lucide-react";
+import { Send, Mail, MapPin, Phone, Github, Linkedin, CheckCircle2 } from "lucide-react";
 import { Button } from "../ui/Button";
 import { Card } from "../ui/Card";
 import { personalInfo } from "@/lib/data";
@@ -73,7 +73,7 @@ export const Contact = () => {
                         <div className="flex gap-6 pt-6">
                             <a href={personalInfo.socials.github} className="w-12 h-12 glass rounded-full flex items-center justify-center text-foreground/60 hover:text-foreground hover:border-accent/50 transition-all"><Github size={20} /></a>
                             <a href={personalInfo.socials.linkedin} className="w-12 h-12 glass rounded-full flex items-center justify-center text-foreground/60 hover:text-foreground hover:border-accent/50 transition-all"><Linkedin size={20} /></a>
-                            <a href={personalInfo.socials.twitter} className="w-12 h-12 glass rounded-full flex items-center justify-center text-foreground/60 hover:text-foreground hover:border-accent/50 transition-all"><Twitter size={20} /></a>
+
                         </div>
                     </div>
 

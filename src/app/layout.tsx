@@ -41,12 +41,6 @@ export const metadata: Metadata = {
     siteName: `${personalInfo.name} Portfolio`,
     images: ["/og-image.png"],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: `${personalInfo.name} — Portfolio`,
-    description: personalInfo.bio,
-    images: ["/og-image.png"],
-  },
   robots: {
     index: true,
     follow: true,
