@@ -4,11 +4,11 @@ import { motion } from "framer-motion";
 import { experience } from "@/lib/data";
 import { Card } from "../ui/Card";
 import { Badge } from "../ui/Badge";
-import { Calendar, Building2 } from "lucide-react";
+import { Calendar, Building2, ExternalLink } from "lucide-react";
 
 export const Experience = () => {
     return (
-        <section id="experience" className="py-24 relative">
+        <section id="experience" className="py-24 relative overflow-hidden">
             <div className="container mx-auto px-6">
                 <header className="mb-20 text-center">
                     <h2 className="text-4xl md:text-5xl font-black text-foreground mb-4">
@@ -19,7 +19,7 @@ export const Experience = () => {
 
                 <div className="relative max-w-4xl mx-auto">
                     {/* Vertical Line */}
-                    <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-transparent via-accent/40 to-transparent lg:block hidden" />
+                    <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-transparent via-accent/40 to-transparent md:block hidden" />
 
                     <div className="space-y-12">
                         {experience.map((exp, i) => (
@@ -64,6 +64,30 @@ export const Experience = () => {
                                                     </li>
                                                 ))}
                                             </ul>
+
+                                            {exp.tech && exp.tech.length > 0 && (
+                                                <div className="flex flex-wrap gap-2 pt-2">
+                                                    {exp.tech.map((t, idx) => (
+                                                        <span key={idx} className="px-2.5 py-1 text-xs font-mono font-medium rounded-md bg-accent/10 text-accent border border-accent/20">
+                                                            {t}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            )}
+
+                                            {exp.certificateUrl && (
+                                                <div className="pt-4 border-t border-white/5 mt-2">
+                                                    <a
+                                                        href={exp.certificateUrl}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="inline-flex items-center gap-2 text-xs font-medium text-accent hover:text-accent/80 transition-colors"
+                                                    >
+                                                        View Certificate
+                                                        <ExternalLink size={12} />
+                                                    </a>
+                                                </div>
+                                            )}
                                         </div>
                                     </Card>
                                 </div>

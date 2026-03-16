@@ -55,7 +55,7 @@ export const Contact = () => {
                     {/* Info Side */}
                     <div className="space-y-12">
                         <header className="space-y-4">
-                            <h2 className="text-5xl md:text-7xl font-black text-foreground tracking-tighter">
+                            <h2 className="text-5xl sm:text-6xl md:text-7xl font-black text-foreground tracking-tighter">
                                 LET&apos;S BUILD <br />
                                 <span className="text-accent">TOGETHER.</span>
                             </h2>
@@ -67,7 +67,7 @@ export const Contact = () => {
                         <div className="space-y-6">
                             <ContactInfo icon={<Mail />} label="Email" value={personalInfo.email} href={personalInfo.socials.email} />
                             <ContactInfo icon={<MapPin />} label="Location" value={personalInfo.location} />
-                            <ContactInfo icon={<Phone />} label="Availability" value="Open for new opportunities" />
+                            <ContactInfo icon={<Phone />} label="Moblie" value="+91 9010617565" />
                         </div>
 
                         <div className="flex gap-6 pt-6">

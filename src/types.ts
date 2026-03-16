@@ -45,6 +45,8 @@ export interface Experience {
   description: string[];
   logo?: string;
   active?: boolean;
+  tech?: string[];
+  certificateUrl?: string;
 }
 
 export interface Achievement {
@@ -52,6 +54,7 @@ export interface Achievement {
   issuer: string;
   date: string;
   icon: string;
+  link?: string;
 }
 
 export interface Education {

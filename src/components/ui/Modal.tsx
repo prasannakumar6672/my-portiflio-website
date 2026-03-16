@@ -57,7 +57,7 @@ export const Modal = ({ isOpen, onClose, children, title, subtitle }: ModalProps
                     >
                         {/* Header */}
                         <div className="relative flex items-start justify-between gap-4 p-6 pb-5 border-b border-white/[0.06] flex-shrink-0 bg-white/[0.02]">
-                            <div className="space-y-1 pr-8">
+                            <div className="space-y-1 pr-12">
                                 <h3 className="text-xl font-bold text-foreground leading-tight">{title}</h3>
                                 {subtitle && (
                                     <p className="text-sm text-foreground/40 italic">{subtitle}</p>

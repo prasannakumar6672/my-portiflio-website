@@ -90,8 +90,8 @@ export const About = () => {
                                     transition={{ delay: i * 0.1 }}
                                     className="space-y-1"
                                 >
-                                    <span className="block text-2xl font-bold text-foreground">{stat.value}</span>
-                                    <span className="block text-[10px] uppercase tracking-widest text-foreground/40 font-semibold">{stat.label}</span>
+                                    <span className="block text-xl sm:text-2xl font-bold text-foreground">{stat.value}</span>
+                                    <span className="block text-[9px] sm:text-[10px] uppercase tracking-widest text-foreground/40 font-semibold">{stat.label}</span>
                                 </motion.div>
                             ))}
                         </div>

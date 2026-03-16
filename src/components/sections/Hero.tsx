@@ -142,7 +142,7 @@ const GridOverlay = () => (
 const AnimatedName = ({ name }: { name: string }) => {
     const chars = name.split("");
     return (
-        <h1 className="text-[2.6rem] xs:text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-[1.1] select-none">
+        <h1 className="text-[2.2rem] xs:text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-[1.1] select-none">
             {chars.map((char, i) => (
                 <motion.span
                     key={i}
@@ -209,7 +209,7 @@ export const Hero = () => {
                 >
                     {/* Greeting */}
                     <motion.p variants={fadeUp} className="text-accent text-base md:text-lg font-medium tracking-widest uppercase">
-                        Hi, my name is
+                        Hi, myself
                     </motion.p>
 
                     {/* Animated Name */}

@@ -99,7 +99,7 @@ function ProjectCard({
                 </div>
 
                 {/* ── Action Buttons ── */}
-                <div className="flex items-center gap-2 pt-3 mt-auto border-t border-white/[0.06]">
+                <div className="flex flex-wrap items-center gap-2 pt-3 mt-auto border-t border-white/[0.06]">
                     {project.liveUrl && (
                         <a
                             href={project.liveUrl}
