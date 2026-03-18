@@ -140,29 +140,39 @@ const GridOverlay = () => (
 
 // ─── Animated name characters ───────────────────────────────────────────────
 const AnimatedName = ({ name }: { name: string }) => {
-    const chars = name.split("");
+    const words = name.split(" ");
     return (
-        <h1 className="text-[2.2rem] xs:text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-[1.1] select-none">
-            {chars.map((char, i) => (
-                <motion.span
-                    key={i}
-                    initial={{ opacity: 0, y: 60, rotateX: -90, filter: "blur(8px)" }}
-                    animate={{ opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
-                    transition={{
-                        duration: 0.7,
-                        delay: 0.5 + i * 0.04,
-                        ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
-                    }}
-                    className="inline-block"
-                    style={{
-                        background: "linear-gradient(135deg, #60a5fa 0%, #a78bfa 45%, #67e8f9 100%)",
-                        WebkitBackgroundClip: "text",
-                        WebkitTextFillColor: "transparent",
-                        backgroundClip: "text",
-                    }}
-                >
-                    {char === " " ? "\u00A0" : char}
-                </motion.span>
+        <h1 className="flex flex-wrap justify-center text-[2.2rem] xs:text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-[1.1] select-none">
+            {words.map((word, wordIdx) => (
+                <span key={wordIdx} className="inline-block whitespace-nowrap mx-[0.2em]">
+                    {word.split("").map((char, charIdx) => {
+                        // Calculate a unique index for staggered animation across words
+                        const previousWordsLength = words.slice(0, wordIdx).join("").length;
+                        const individualIdx = previousWordsLength + charIdx;
+
+                        return (
+                            <motion.span
+                                key={charIdx}
+                                initial={{ opacity: 0, y: 60, rotateX: -90, filter: "blur(8px)" }}
+                                animate={{ opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
+                                transition={{
+                                    duration: 0.7,
+                                    delay: 0.5 + individualIdx * 0.04,
+                                    ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+                                }}
+                                className="inline-block"
+                                style={{
+                                    background: "linear-gradient(135deg, #60a5fa 0%, #a78bfa 45%, #67e8f9 100%)",
+                                    WebkitBackgroundClip: "text",
+                                    WebkitTextFillColor: "transparent",
+                                    backgroundClip: "text",
+                                }}
+                            >
+                                {char}
+                            </motion.span>
+                        );
+                    })}
+                </span>
             ))}
         </h1>
     );

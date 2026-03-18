@@ -24,18 +24,18 @@ export const About = () => {
                         transition={{ duration: 0.8 }}
                         className="flex-1 relative"
                     >
-                        <div className="aspect-square w-full max-w-md mx-auto relative group">
+                        <div className="aspect-square w-full max-w-md mx-auto relative group min-h-[350px] sm:min-h-0">
                             {/* Decorative Frame */}
                             <div className="absolute inset-0 border-2 border-accent/30 rounded-3xl -rotate-6 group-hover:rotate-0 transition-transform duration-500" />
                             <div className="absolute inset-0 border-2 border-foreground/10 rounded-3xl rotate-3 group-hover:rotate-0 transition-transform duration-500" />
 
                             {/* Photo Container */}
-                            <div className="absolute inset-2 z-10">
+                            <div className="absolute inset-2 z-10 rounded-3xl overflow-hidden">
                                 <Image
                                     src={personalInfo.avatar}
                                     alt="About Me"
                                     fill
-                                    className="object-cover object-top rounded-3xl"
+                                    className="object-cover object-top"
                                     sizes="(max-width: 768px) 100vw, 448px"
                                     priority
                                 />
