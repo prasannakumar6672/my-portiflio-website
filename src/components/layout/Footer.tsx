@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import {
     Github,
     Linkedin,
@@ -20,11 +21,11 @@ import { Logo } from "../ui/Logo";
 
 // ── Navigation links ─────────────────────────────────────────────────────────
 const navLinks = [
-    { label: "About", href: "#about", icon: User },
-    { label: "Projects", href: "#projects", icon: FolderOpen },
-    { label: "Experience", href: "#experience", icon: Briefcase },
-    { label: "Tech Stack", href: "#tech", icon: Layers },
-    { label: "Contact", href: "#contact", icon: MessageCircle },
+    { label: "About",      href: "/about",      icon: User },
+    { label: "Projects",   href: "/projects",   icon: FolderOpen },
+    { label: "Experience", href: "/experience", icon: Briefcase },
+    { label: "Tech Stack", href: "/skills",     icon: Layers },
+    { label: "Contact",    href: "/contact",    icon: MessageCircle },
 ];
 
 // ── Social definitions ────────────────────────────────────────────────────────
@@ -68,11 +69,6 @@ const Orb = ({
 export const Footer = () => {
     const scrollToTop = () =>
         window.scrollTo({ top: 0, behavior: "smooth" });
-
-    const scrollTo = (href: string) => {
-        const el = document.querySelector(href);
-        if (el) el.scrollIntoView({ behavior: "smooth" });
-    };
 
     return (
         <footer className="relative bg-[#050505] overflow-hidden select-none">
@@ -132,13 +128,13 @@ export const Footer = () => {
                     {/* Nav links — single horizontal row */}
                     <nav className="flex flex-wrap justify-center gap-x-4 gap-y-2">
                         {navLinks.map(({ label, href }) => (
-                            <button
+                            <Link
                                 key={label}
-                                onClick={() => scrollTo(href)}
+                                href={href}
                                 className="text-slate-400 hover:text-white text-xs font-mono transition-colors cursor-pointer"
                             >
                                 {label}
-                            </button>
+                            </Link>
                         ))}
                     </nav>
                 </div>
@@ -192,8 +188,8 @@ export const Footer = () => {
                         <ul className="space-y-3">
                             {navLinks.map(({ label, href, icon: Icon }) => (
                                 <li key={label}>
-                                    <button
-                                        onClick={() => scrollTo(href)}
+                                    <Link
+                                        href={href}
                                         className="group flex items-center gap-2.5 text-slate-400 hover:text-white text-sm transition-colors duration-200 cursor-pointer w-full text-left"
                                     >
                                         <Icon
@@ -201,7 +197,7 @@ export const Footer = () => {
                                             className="text-accent/50 group-hover:text-accent transition-colors duration-200 shrink-0"
                                         />
                                         {label}
-                                    </button>
+                                    </Link>
                                 </li>
                             ))}
                         </ul>

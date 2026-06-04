@@ -374,17 +374,7 @@ export const Hero = () => {
                 </div>
             </div>
 
-            {/* Bottom Scroll Reminder */}
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 opacity-60 print:hidden z-20">
-                <span className="text-[8px] tracking-[0.2em] uppercase font-bold text-slate-400">SCROLL DOWN</span>
-                <div className="w-5 h-8 rounded-full border border-slate-300 dark:border-white/20 flex items-start justify-center pt-1.5">
-                    <motion.div
-                        className="w-1 h-1.5 rounded-full bg-accent"
-                        animate={{ y: [0, 8, 0] }}
-                        transition={{ duration: 1.5, repeat: Infinity }}
-                    />
-                </div>
-            </div>
+
         </section>
     );
 };

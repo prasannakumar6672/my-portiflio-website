@@ -99,10 +99,10 @@ export const About = () => {
 
                 {/* Bento Grid Dashboard */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-                    
+
                     {/* LEFT COLUMN: Profile and Vitals stacked vertically (col-span-4) */}
                     <div className="lg:col-span-4 flex flex-col gap-6">
-                        
+
                         {/* Profile Card */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
@@ -113,7 +113,7 @@ export const About = () => {
                         >
                             <Card className="w-full p-6 flex flex-col flex-grow group border-slate-200 dark:border-white/5 bg-slate-50/[0.2] dark:bg-white/[0.01] hover:bg-white dark:hover:bg-white/[0.02] transition-all relative overflow-hidden rounded-2xl">
                                 <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:14px_24px] opacity-20 pointer-events-none" />
-                                
+
                                 {/* Portrait photo */}
                                 <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-slate-100 dark:bg-neutral-900 border border-slate-200 dark:border-white/10 shadow-sm flex-grow">
                                     <Image
@@ -175,7 +175,7 @@ export const About = () => {
                                     <div className="p-3.5 rounded-xl border border-slate-200 dark:border-white/5 bg-slate-50/50 dark:bg-white/[0.01] hover:border-accent/20 hover:bg-accent/[0.02] transition-all duration-300 group/stat">
                                         <AnimatedCounter value="9" label="Hackathons" />
                                     </div>
-                                    
+
                                     <div className="p-3.5 rounded-xl border border-slate-200 dark:border-white/5 bg-slate-50/50 dark:bg-white/[0.01] hover:border-accent/20 hover:bg-accent/[0.02] transition-all duration-300 group/stat">
                                         <AnimatedCounter value="5" label="Core Projects" />
                                     </div>
@@ -222,12 +222,12 @@ export const About = () => {
                                 <p>
                                     I specialize in building solutions that merge computer vision, machine learning models, and full-stack software architectures. My focus is on turning raw intelligence into usable platforms, such as automatic satellite image segmentation to trace illegal water constructions or real-time road damage diagnostics dashboards.
                                 </p>
-                                
+
                                 {/* Code block styled quote */}
                                 <div className="relative mt-6 p-4 rounded-xl bg-slate-100 dark:bg-white/[0.02] border border-slate-200/60 dark:border-white/5 font-mono text-[11px] text-slate-500 dark:text-slate-450 leading-relaxed">
                                     <span className="text-accent font-bold block mb-1.5">// mission statement</span>
                                     <span className="italic text-slate-700 dark:text-slate-300">
-                                        "Solving environmental and civic challenges at scale through automation and machine learning isn't just a goal — it's the core focus of my work."
+                                        "AI isn't the future - it's the present .My job is to bulid it responsibly."
                                     </span>
                                 </div>
                             </div>
@@ -262,20 +262,20 @@ export const About = () => {
                                 <div className="absolute top-[28px] left-[12.5%] right-[12.5%] h-[2px] bg-slate-200 dark:bg-white/10 hidden md:block" />
 
                                 {/* Glowing active track */}
-                                <motion.div 
+                                <motion.div
                                     className="absolute top-[28px] left-[12.5%] h-[2px] bg-accent hidden md:block"
                                     initial={{ width: "75%" }}
-                                    animate={{ 
-                                        width: hoveredIdx !== null 
-                                            ? `${(hoveredIdx / 3) * 75}%` 
-                                            : "75%" 
+                                    animate={{
+                                        width: hoveredIdx !== null
+                                            ? `${(hoveredIdx / 3) * 75}%`
+                                            : "75%"
                                     }}
                                     transition={{ type: "spring", stiffness: 70, damping: 14 }}
                                     style={{ boxShadow: "0 0 10px var(--accent)" }}
                                 />
 
                                 {/* Horizontal items row (no text clamping for full readability) */}
-                                <div 
+                                <div
                                     style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
                                     className="flex md:grid md:grid-cols-4 overflow-x-auto md:overflow-visible snap-x snap-mandatory gap-6 md:gap-8 pb-6 md:pb-0"
                                 >
@@ -289,34 +289,31 @@ export const About = () => {
                                                 className="flex-shrink-0 w-[240px] md:w-auto snap-center flex flex-col items-center text-center group/timeline cursor-pointer"
                                             >
                                                 {/* Timeline Node */}
-                                                <div 
+                                                <div
                                                     style={{
                                                         borderColor: isActive ? "var(--accent)" : "var(--border)",
                                                         boxShadow: isActive ? "0 0 15px -3px var(--accent-muted)" : "none",
                                                     }}
-                                                    className={`relative z-10 w-12 h-12 rounded-full bg-white dark:bg-[#050505] border-2 flex items-center justify-center transition-all duration-300 group-hover/timeline:scale-110 ${
-                                                        isActive ? "text-accent" : "text-slate-400 dark:text-slate-600"
-                                                    }`}
+                                                    className={`relative z-10 w-12 h-12 rounded-full bg-white dark:bg-[#050505] border-2 flex items-center justify-center transition-all duration-300 group-hover/timeline:scale-110 ${isActive ? "text-accent" : "text-slate-400 dark:text-slate-600"
+                                                        }`}
                                                 >
                                                     <span className="scale-[0.9]">{item.icon}</span>
                                                 </div>
 
                                                 {/* Year Badge */}
-                                                <span 
-                                                    className={`mt-4 inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold border transition-colors duration-300 ${
-                                                        isActive 
-                                                            ? "text-accent bg-accent/5 border-accent/20" 
+                                                <span
+                                                    className={`mt-4 inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold border transition-colors duration-300 ${isActive
+                                                            ? "text-accent bg-accent/5 border-accent/20"
                                                             : "text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-white/5 border-slate-200 dark:border-white/5"
-                                                    }`}
+                                                        }`}
                                                 >
                                                     {item.year}
                                                 </span>
 
                                                 {/* Details (No line-clamps or ellipsis for readable wrapping) */}
-                                                <h4 
-                                                    className={`mt-3 text-[13px] font-bold transition-colors duration-300 px-1 leading-snug ${
-                                                        isActive ? "text-slate-900 dark:text-white" : "text-slate-400 dark:text-slate-500"
-                                                    }`}
+                                                <h4
+                                                    className={`mt-3 text-[13px] font-bold transition-colors duration-300 px-1 leading-snug ${isActive ? "text-slate-900 dark:text-white" : "text-slate-400 dark:text-slate-500"
+                                                        }`}
                                                 >
                                                     {item.title}
                                                 </h4>
