@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Plus_Jakarta_Sans, Fira_Code } from "next/font/google";
 import "./globals.css";
 import { personalInfo } from "@/lib/data";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
@@ -9,37 +8,20 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { IntroWrapper } from "@/components/layout/IntroWrapper";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-display",
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
-});
-
-const plusJakarta = Plus_Jakarta_Sans({
-  variable: "--font-body",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
-const firaCode = Fira_Code({
-  variable: "--font-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
   title: {
     default: `${personalInfo.name} — Developer Portfolio`,
     template: `%s | ${personalInfo.name}`,
   },
   description: personalInfo.bio,
-  keywords: ["Full Stack Developer", "UI/UX Designer", "Next.js", "TypeScript", "React"],
-  authors: [{ name: personalInfo.name, url: "https://alexvance.dev" }],
+  keywords: ["Full Stack Developer", "AI/ML Engineer", "Next.js", "TypeScript", "React"],
+  authors: [{ name: personalInfo.name, url: "https://github.com/prasannakumar6672" }],
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://alexvance.dev",
+    url: "https://github.com/prasannakumar6672",
     siteName: `${personalInfo.name} Portfolio`,
-    images: ["/og-image.png"],
+    images: ["/images/about.jpeg"],
   },
   robots: {
     index: true,
@@ -63,7 +45,7 @@ export default function RootLayout({
     name: personalInfo.name,
     jobTitle: personalInfo.title,
     description: personalInfo.bio,
-    url: "https://alexvance.dev",
+    url: "https://github.com/prasannakumar6672",
     sameAs: [
       personalInfo.socials.github,
       personalInfo.socials.linkedin,
@@ -73,13 +55,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body
-        className={`${spaceGrotesk.variable} ${plusJakarta.variable} ${firaCode.variable} antialiased font-body bg-background text-foreground`}
+        className="antialiased font-body bg-background text-foreground"
       >
         <SmoothScroll />
         <ThemeProvider>
@@ -96,3 +79,4 @@ export default function RootLayout({
     </html>
   );
 }
+

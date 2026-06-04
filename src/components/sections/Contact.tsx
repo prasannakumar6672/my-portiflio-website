@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Send, Mail, MapPin, Phone, Github, Linkedin, CheckCircle2 } from "lucide-react";
+import { Send, Mail, MapPin, Phone, Github, Linkedin, CheckCircle2, AlertCircle } from "lucide-react";
 import { Button } from "../ui/Button";
 import { Card } from "../ui/Card";
 import { personalInfo } from "@/lib/data";
@@ -15,9 +15,6 @@ export const Contact = () => {
         setFormState("loading");
 
         const formData = new FormData(e.currentTarget);
-
-        // Add your Web3Forms Access Key here or in .env.local as NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY
-        // You can get a free access key from https://web3forms.com/
         formData.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || "YOUR_ACCESS_KEY_HERE");
 
         const object = Object.fromEntries(formData);
@@ -46,105 +43,140 @@ export const Contact = () => {
     };
 
     return (
-        <section id="contact" className="py-24 relative overflow-hidden">
-            {/* Decorative Blur */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
+        <section id="contact" className="py-24 bg-transparent transition-colors duration-300 relative overflow-hidden">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
 
-            <div className="container mx-auto px-6 relative z-10">
-                <div className="grid lg:grid-cols-2 gap-16 items-start">
-                    {/* Info Side */}
-                    <div className="space-y-12">
+            <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-6xl">
+                <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+                    
+                    {/* ══ LEFT: CONTACT INFO (5 Cols) ══════════════════════════════ */}
+                    <div className="lg:col-span-5 space-y-10">
                         <header className="space-y-4">
-                            <h2 className="text-5xl sm:text-6xl md:text-7xl font-black text-foreground tracking-tighter">
-                                LET&apos;S BUILD <br />
-                                <span className="text-accent">TOGETHER.</span>
+                            <span className="text-xs font-mono font-bold tracking-[0.25em] text-accent uppercase block">// request query</span>
+                            <h2 className="text-4xl sm:text-6xl font-display font-black text-slate-900 dark:text-white leading-none uppercase">
+                                Let's Build <br />
+                                <span className="bg-gradient-to-r from-accent to-[#FF8C00] bg-clip-text text-transparent">Together.</span>
                             </h2>
-                            <p className="text-foreground/40 text-lg max-w-md">
-                                Have an ambitious project in mind? Let&apos;s connect and turn your vision into a digital masterpiece.
+                            <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed max-w-sm">
+                                Have an innovative project, AI agent pipeline, or full-stack architectural design in mind? Drop a line and let's construct it.
                             </p>
                         </header>
 
-                        <div className="space-y-6">
-                            <ContactInfo icon={<Mail />} label="Email" value={personalInfo.email} href={personalInfo.socials.email} />
-                            <ContactInfo icon={<MapPin />} label="Location" value={personalInfo.location} />
-                            <ContactInfo icon={<Phone />} label="Moblie" value="+91 9010617565" />
+                        <div className="space-y-4">
+                            <ContactInfo icon={<Mail size={16} />} label="Email" value={personalInfo.email} href={personalInfo.socials.email} />
+                            <ContactInfo icon={<MapPin size={16} />} label="Location" value={personalInfo.location} />
+                            <ContactInfo icon={<Phone size={16} />} label="Mobile" value="+91 9010617565" />
                         </div>
 
-                        <div className="flex gap-6 pt-6">
-                            <a href={personalInfo.socials.github} className="w-12 h-12 glass rounded-full flex items-center justify-center text-foreground/60 hover:text-foreground hover:border-accent/50 transition-all"><Github size={20} /></a>
-                            <a href={personalInfo.socials.linkedin} className="w-12 h-12 glass rounded-full flex items-center justify-center text-foreground/60 hover:text-foreground hover:border-accent/50 transition-all"><Linkedin size={20} /></a>
-
+                        <div className="flex gap-4 pt-4">
+                            <a
+                                href={personalInfo.socials.github}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-10 h-10 border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 rounded-full flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-accent dark:hover:text-accent hover:border-accent/40 transition-all cursor-pointer"
+                            >
+                                <Github size={18} />
+                            </a>
+                            <a
+                                href={personalInfo.socials.linkedin}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-10 h-10 border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 rounded-full flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-accent dark:hover:text-accent hover:border-accent/40 transition-all cursor-pointer"
+                            >
+                                <Linkedin size={18} />
+                            </a>
                         </div>
                     </div>
 
-                    {/* Form Side */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 40 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                    >
-                        <Card className="p-8 md:p-12 border-white/5 bg-white/[0.03]">
+                    {/* ══ RIGHT: PREMIUM FORM CARD (7 Cols) ════════════════════════ */}
+                    <div className="lg:col-span-7">
+                        <Card className="p-6 sm:p-10 border-slate-200 dark:border-white/5 bg-slate-50/[0.2] dark:bg-white/[0.01]">
                             {formState === "success" ? (
                                 <motion.div
-                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    initial={{ opacity: 0, scale: 0.95 }}
                                     animate={{ opacity: 1, scale: 1 }}
-                                    className="py-20 text-center space-y-6"
+                                    className="py-14 text-center space-y-6"
                                 >
-                                    <div className="w-20 h-20 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mx-auto ring-8 ring-green-500/10">
-                                        <CheckCircle2 size={40} />
+                                    <div className="w-16 h-16 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center mx-auto ring-8 ring-emerald-500/5">
+                                        <CheckCircle2 size={32} />
                                     </div>
                                     <div className="space-y-2">
-                                        <h3 className="text-2xl font-bold text-foreground">Message Sent!</h3>
-                                        <p className="text-foreground/40">I&apos;ll get back to you within 24 hours.</p>
+                                        <h3 className="text-xl font-bold text-slate-900 dark:text-white">Message Transmitted</h3>
+                                        <p className="text-xs text-slate-500 dark:text-slate-400">Response standard latency is under 24 hours.</p>
                                     </div>
-                                    <Button variant="outline" onClick={() => setFormState("idle")}>
+                                    <Button variant="outline" size="sm" onClick={() => setFormState("idle")}>
                                         Send Another Message
                                     </Button>
                                 </motion.div>
                             ) : formState === "error" ? (
                                 <motion.div
-                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    initial={{ opacity: 0, scale: 0.95 }}
                                     animate={{ opacity: 1, scale: 1 }}
-                                    className="py-20 text-center space-y-6"
+                                    className="py-14 text-center space-y-6"
                                 >
-                                    <div className="w-20 h-20 bg-red-500/20 text-red-500 rounded-full flex items-center justify-center mx-auto ring-8 ring-red-500/10">
-                                        <span className="text-4xl font-black">!</span>
+                                    <div className="w-16 h-16 bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mx-auto ring-8 ring-red-500/5">
+                                        <AlertCircle size={32} />
                                     </div>
                                     <div className="space-y-2">
-                                        <h3 className="text-2xl font-bold text-foreground">Something went wrong!</h3>
-                                        <p className="text-foreground/40">Please try again later or contact me directly via email.</p>
+                                        <h3 className="text-xl font-bold text-slate-900 dark:text-white">Transmission Defect</h3>
+                                        <p className="text-xs text-slate-500 dark:text-slate-400">Please retry or mail directly to {personalInfo.email}.</p>
                                     </div>
-                                    <Button variant="outline" onClick={() => setFormState("idle")}>
-                                        Try Again
+                                    <Button variant="outline" size="sm" onClick={() => setFormState("idle")}>
+                                        Retry Transmission
                                     </Button>
                                 </motion.div>
                             ) : (
-                                <form onSubmit={handleSubmit} className="space-y-6">
-                                    <div className="grid md:grid-cols-2 gap-6">
-                                        <div className="space-y-2">
-                                            <label className="text-[10px] uppercase tracking-widest font-bold text-foreground/40 ml-1">Your Name</label>
-                                            <input name="name" required className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-foreground placeholder:text-foreground/20 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all" placeholder="John Doe" />
+                                <form onSubmit={handleSubmit} className="space-y-5">
+                                    <div className="grid md:grid-cols-2 gap-5">
+                                        <div className="space-y-1.5">
+                                            <label className="text-[10px] uppercase tracking-wider font-bold text-slate-400 ml-1">Your Name</label>
+                                            <input
+                                                name="name"
+                                                required
+                                                type="text"
+                                                className="w-full bg-white dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-2xl px-5 py-3 text-sm text-slate-800 dark:text-white placeholder:text-slate-350 dark:placeholder:text-slate-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all"
+                                                placeholder="John Doe"
+                                            />
                                         </div>
-                                        <div className="space-y-2">
-                                            <label className="text-[10px] uppercase tracking-widest font-bold text-foreground/40 ml-1">Email Address</label>
-                                            <input name="email" type="email" required className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-foreground placeholder:text-foreground/20 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all" placeholder="john@example.com" />
+                                        <div className="space-y-1.5">
+                                            <label className="text-[10px] uppercase tracking-wider font-bold text-slate-400 ml-1">Email Address</label>
+                                            <input
+                                                name="email"
+                                                required
+                                                type="email"
+                                                className="w-full bg-white dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-2xl px-5 py-3 text-sm text-slate-800 dark:text-white placeholder:text-slate-350 dark:placeholder:text-slate-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all"
+                                                placeholder="john@example.com"
+                                            />
                                         </div>
                                     </div>
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] uppercase tracking-widest font-bold text-foreground/40 ml-1">Subject</label>
-                                        <input name="subject" required className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-foreground placeholder:text-foreground/20 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all" placeholder="Project Inquiry" />
+                                    <div className="space-y-1.5">
+                                        <label className="text-[10px] uppercase tracking-wider font-bold text-slate-400 ml-1">Subject</label>
+                                        <input
+                                            name="subject"
+                                            required
+                                            type="text"
+                                            className="w-full bg-white dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-2xl px-5 py-3 text-sm text-slate-800 dark:text-white placeholder:text-slate-350 dark:placeholder:text-slate-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all"
+                                            placeholder="System Architecture Collaboration"
+                                        />
                                     </div>
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] uppercase tracking-widest font-bold text-foreground/40 ml-1">Message</label>
-                                        <textarea name="message" required rows={4} className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-foreground placeholder:text-foreground/20 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all resize-none" placeholder="Tell me about your project..." />
+                                    <div className="space-y-1.5">
+                                        <label className="text-[10px] uppercase tracking-wider font-bold text-slate-400 ml-1">Message</label>
+                                        <textarea
+                                            name="message"
+                                            required
+                                            rows={4}
+                                            className="w-full bg-white dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-2xl px-5 py-3 text-sm text-slate-800 dark:text-white placeholder:text-slate-350 dark:placeholder:text-slate-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all resize-none"
+                                            placeholder="Describe the technical requirements or system scope..."
+                                        />
                                     </div>
-                                    <Button type="submit" className="w-full h-14" isLoading={formState === "loading"}>
-                                        Send Message <Send className="ml-2 w-4 h-4" />
+                                    <Button type="submit" className="w-full h-12 text-xs font-bold text-white bg-accent hover:bg-accent/90 cursor-pointer shadow-md" isLoading={formState === "loading"}>
+                                        Transmit Query
+                                        <Send className="ml-1.5 w-3.5 h-3.5" />
                                     </Button>
                                 </form>
                             )}
                         </Card>
-                    </motion.div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -153,16 +185,17 @@ export const Contact = () => {
 
 const ContactInfo = ({ icon, label, value, href }: { icon: React.ReactNode; label: string; value: string; href?: string }) => {
     const content = (
-        <div className="flex items-center gap-6 group cursor-pointer">
-            <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-foreground transition-all duration-300">
+        <div className="flex items-center gap-4 group cursor-pointer p-3.5 bg-slate-50/[0.3] dark:bg-white/[0.01] border border-slate-200 dark:border-white/5 rounded-2xl hover:bg-white dark:hover:bg-white/[0.02] transition-all">
+            <div className="w-9 h-9 bg-accent/10 rounded-xl flex items-center justify-center text-accent shrink-0 transition-transform group-hover:scale-105 shadow-sm">
                 {icon}
             </div>
-            <div>
-                <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-foreground/30">{label}</p>
-                <p className="text-lg font-bold text-foreground/80 group-hover:text-foreground transition-colors">{value}</p>
+            <div className="min-w-0">
+                <p className="text-[9px] uppercase tracking-wider font-bold text-slate-400 dark:text-slate-500">{label}</p>
+                <p className="text-sm font-bold text-slate-800 dark:text-slate-200 truncate group-hover:text-accent transition-colors">{value}</p>
             </div>
         </div>
     );
 
-    return href ? <a href={href}>{content}</a> : content;
+    return href ? <a href={href} target="_blank" rel="noopener noreferrer" className="block">{content}</a> : content;
 };
+

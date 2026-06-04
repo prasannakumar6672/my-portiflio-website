@@ -2,34 +2,31 @@
 
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Sun, Moon, Github, Linkedin } from "lucide-react";
-import { Button } from "../ui/Button";
-import { personalInfo } from "@/lib/data";
+import { Menu, X, Sun, Moon, ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Logo } from "../ui/Logo";
 
 const navLinks = [
-    { name: "About", href: "#about" },
-    { name: "Skills", href: "#skills" },
-    { name: "Projects", href: "#projects" },
-    { name: "Experience", href: "#experience" },
-    { name: "Contact", href: "#contact" },
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Skills", href: "/skills" },
+    { name: "Projects", href: "/projects" },
+    { name: "Experience", href: "/experience" },
+    { name: "Contact", href: "/contact" },
 ];
 
-// ─── Theme Toggle Button ─────────────────────────────────────────────────────
+// ─── Theme Toggle ─────────────────────────────────────────────────────────────
 const ThemeToggle = () => {
     const { theme, setTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setMounted(true);
-        }, 0);
-        return () => clearTimeout(timer);
+        setMounted(true);
     }, []);
 
-    if (!mounted) return <div className="w-10 h-10" />;
+    if (!mounted) return <div className="w-8 h-8" />;
 
     const isDark = theme === "dark";
 
@@ -37,91 +34,35 @@ const ThemeToggle = () => {
         <motion.button
             onClick={() => setTheme(isDark ? "light" : "dark")}
             aria-label="Toggle theme"
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.92 }}
-            className={cn(
-                "relative w-14 h-7 rounded-full transition-all duration-500 flex items-center px-1",
-                isDark
-                    ? "bg-accent/30 border border-accent/40"
-                    : "bg-amber-100 border border-amber-300"
-            )}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className="w-8 h-8 rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200 cursor-pointer"
         >
-            {/* Track icons */}
-            <Moon
-                size={12}
-                className={cn(
-                    "absolute left-1.5 transition-opacity duration-300",
-                    isDark ? "opacity-80 text-blue-300" : "opacity-20 text-slate-400"
-                )}
-            />
-            <Sun
-                size={12}
-                className={cn(
-                    "absolute right-1.5 transition-opacity duration-300",
-                    isDark ? "opacity-20 text-slate-400" : "opacity-90 text-amber-500"
-                )}
-            />
-            {/* Thumb */}
-            <motion.div
-                layout
-                animate={{ x: isDark ? 0 : 28 }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                className={cn(
-                    "w-5 h-5 rounded-full shadow-lg z-10 flex items-center justify-center",
-                    isDark ? "bg-accent" : "bg-amber-400"
-                )}
-            >
-                <AnimatePresence mode="wait">
-                    {isDark ? (
-                        <motion.div key="moon" initial={{ rotate: -30, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 30, opacity: 0 }} transition={{ duration: 0.2 }}>
-                            <Moon size={10} className="text-foreground" />
-                        </motion.div>
-                    ) : (
-                        <motion.div key="sun" initial={{ rotate: 30, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -30, opacity: 0 }} transition={{ duration: 0.2 }}>
-                            <Sun size={10} className="text-foreground" />
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            </motion.div>
+            {isDark ? <Sun size={16} /> : <Moon size={16} />}
         </motion.button>
     );
 };
 
 // ─── Navbar ───────────────────────────────────────────────────────────────────
 export const Navbar = () => {
-    const [isScrolled, setIsScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [activeSection, setActiveSection] = useState("");
-    const { theme } = useTheme();
+    const [isShrunk, setIsShrunk] = useState(false);
     const [mounted, setMounted] = useState(false);
+    const { theme } = useTheme();
+    const pathname = usePathname();
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setMounted(true);
-        }, 0);
-        return () => clearTimeout(timer);
+        setMounted(true);
     }, []);
 
     useEffect(() => {
         if (!mounted) return;
 
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
-            const sections = navLinks.map(link => link.href.substring(1));
-            for (const section of sections) {
-                const element = document.getElementById(section);
-                if (element) {
-                    const rect = element.getBoundingClientRect();
-                    if (rect.top <= 100 && rect.bottom >= 100) {
-                        setActiveSection(`#${section}`);
-                        break;
-                    }
-                }
-            }
+            setIsShrunk(window.scrollY > 40);
         };
 
-        handleScroll(); // Initial check
-        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
     }, [mounted]);
 
@@ -132,100 +73,167 @@ export const Navbar = () => {
     const isDark = theme === "dark";
 
     return (
-        <nav
-            className={cn(
-                "fixed top-0 left-0 right-0 z-[50] transition-all duration-500",
-                isScrolled ? "py-3" : "py-6"
-            )}
-        >
-            {/* Background Blur Bar */}
-            <motion.div
-                animate={{ opacity: isScrolled ? 1 : 0 }}
-                transition={{ duration: 0.3 }}
-                className={cn(
-                    "absolute inset-0 backdrop-blur-xl border-b",
-                    isDark
-                        ? "bg-[#0a0a0a]/80 border-white/5"
-                        : "bg-white/80 border-slate-200"
-                )}
-            />
-
-            <div className="container mx-auto px-6 flex items-center justify-between relative z-10">
-                <Logo />
-
-                {/* Desktop Nav */}
+        <>
+            {/* ─── Desktop Floating Navbar ─── */}
+            <motion.nav
+                initial={{ opacity: 0, y: -30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="fixed top-5 left-0 right-0 z-[50] flex justify-center px-4"
+            >
                 <div
                     className={cn(
-                        "hidden md:flex items-center gap-6 px-7 py-2.5 rounded-full border backdrop-blur-xl",
-                        isDark
-                            ? "bg-white/5 border-white/10"
-                            : "bg-white/70 border-slate-200 shadow-sm"
+                        "hidden md:flex items-center justify-between rounded-full shadow-2xl transition-all duration-300 border border-white/10 bg-black/95 backdrop-blur-md",
+                        isShrunk ? "px-6 py-2 w-full max-w-3xl" : "px-8 py-3 w-full max-w-4xl"
                     )}
                 >
-                    {navLinks.map((link, i) => (
-                        <motion.a
-                            key={link.name}
-                            href={link.href}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                const targetId = link.href.substring(1);
-                                const element = document.getElementById(targetId);
-                                if (element) {
-                                    element.scrollIntoView({ behavior: "smooth" });
-                                }
-                            }}
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: i * 0.08 }}
-                            className={cn(
-                                "relative text-sm font-medium transition-colors cursor-pointer",
-                                activeSection === link.href
-                                    ? "text-accent"
-                                    : isDark ? "text-foreground/60 hover:text-foreground" : "text-slate-500 hover:text-slate-900"
-                            )}
+                    {/* Left: Home, About, Skills, Projects */}
+                    <div className="flex items-center gap-1">
+                        {navLinks.slice(0, 4).map((link) => {
+                            const isActive = link.href === "/" ? pathname === "/" : pathname === link.href || pathname?.startsWith(link.href);
+                            return (
+                                <Link
+                                    key={link.name}
+                                    href={link.href}
+                                    className="relative px-3.5 py-1.5 text-xs font-semibold tracking-wide cursor-pointer transition-colors duration-200 hover:text-white"
+                                    style={{
+                                        color: isActive ? "#FF5A1F" : "rgba(255,255,255,0.55)"
+                                    }}
+                                >
+                                    <span>{link.name}</span>
+                                    {isActive && (
+                                        <motion.div
+                                            layoutId="activeNavDot"
+                                            className="absolute bottom-[-4px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-accent"
+                                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                                        />
+                                    )}
+                                </Link>
+                            );
+                        })}
+                    </div>
+
+                    {/* Center: Circular Orange PK Logo */}
+                    <div className="flex items-center justify-center">
+                        <Link href="/" className="flex items-center gap-2 group mx-4">
+                            <motion.div
+                                whileHover={{ scale: 1.08, rotate: 360 }}
+                                transition={{ duration: 0.6, ease: "easeOut" }}
+                                className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-white text-[10px] shadow-lg bg-accent"
+                            >
+                                PK
+                            </motion.div>
+                        </Link>
+                    </div>
+
+                    {/* Right: Experience, Resume, Contact, Theme Toggle */}
+                    <div className="flex items-center gap-1">
+                        {/* Experience Link */}
+                        {(() => {
+                            const link = { name: "Experience", href: "/experience" };
+                            const isActive = pathname === "/experience" || pathname?.startsWith("/experience");
+                            return (
+                                <Link
+                                    href={link.href}
+                                    className="relative px-3.5 py-1.5 text-xs font-semibold tracking-wide cursor-pointer transition-colors duration-200 hover:text-white"
+                                    style={{
+                                        color: isActive ? "#FF5A1F" : "rgba(255,255,255,0.55)"
+                                    }}
+                                >
+                                    <span>{link.name}</span>
+                                    {isActive && (
+                                        <motion.div
+                                            layoutId="activeNavDot"
+                                            className="absolute bottom-[-4px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-accent"
+                                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                                        />
+                                    )}
+                                </Link>
+                            );
+                        })()}
+                        {/* Resume Link */}
+                        {(() => {
+                            const link = { name: "Resume", href: "/resume" };
+                            const isActive = pathname === "/resume" || pathname?.startsWith("/resume");
+                            return (
+                                <Link
+                                    href={link.href}
+                                    className="relative px-3.5 py-1.5 text-xs font-semibold tracking-wide cursor-pointer transition-colors duration-200 hover:text-white"
+                                    style={{
+                                        color: isActive ? "#FF5A1F" : "rgba(255,255,255,0.55)"
+                                    }}
+                                >
+                                    <span>{link.name}</span>
+                                    {isActive && (
+                                        <motion.div
+                                            layoutId="activeNavDot"
+                                            className="absolute bottom-[-4px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-accent"
+                                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                                        />
+                                    )}
+                                </Link>
+                            );
+                        })()}
+                        {/* Contact Link */}
+                        {(() => {
+                            const link = { name: "Contact", href: "/contact" };
+                            const isActive = pathname === "/contact" || pathname?.startsWith("/contact");
+                            return (
+                                <Link
+                                    href={link.href}
+                                    className="relative px-3.5 py-1.5 text-xs font-semibold tracking-wide cursor-pointer transition-colors duration-200 hover:text-white"
+                                    style={{
+                                        color: isActive ? "#FF5A1F" : "rgba(255,255,255,0.55)"
+                                    }}
+                                >
+                                    <span>{link.name}</span>
+                                    {isActive && (
+                                        <motion.div
+                                            layoutId="activeNavDot"
+                                            className="absolute bottom-[-4px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-accent"
+                                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                                        />
+                                    )}
+                                </Link>
+                            );
+                        })()}
+                        {/* Theme Toggle */}
+                        <div className="pl-3 ml-2 border-l border-white/10 flex items-center">
+                            <ThemeToggle />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Mobile Floating Bar */}
+                <div
+                    className={cn(
+                        "md:hidden flex items-center justify-between w-full max-w-sm rounded-full px-5 py-3 shadow-2xl border border-white/10 bg-[#0a0a0a]/90 backdrop-blur-md transition-all duration-300",
+                        isShrunk ? "py-2" : "py-3"
+                    )}
+                >
+                    {/* Mobile Logo */}
+                    <Link href="/" className="flex items-center gap-2">
+                        <div
+                            className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-white text-[10px]"
+                            style={{ background: "linear-gradient(135deg, #FF5A1F 0%, #FF8C00 100%)" }}
                         >
-                            {link.name}
-                            {activeSection === link.href && (
-                                <motion.div
-                                    layoutId="activeNav"
-                                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-accent rounded-full"
-                                />
-                            )}
-                        </motion.a>
-                    ))}
+                            PK
+                        </div>
+                    </Link>
+
+                    <div className="flex items-center gap-3">
+                        <ThemeToggle />
+                        <button
+                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                            className="text-white/70 hover:text-white p-1 cursor-pointer"
+                        >
+                            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+                        </button>
+                    </div>
                 </div>
+            </motion.nav>
 
-                {/* Right section */}
-                <div className="flex items-center gap-3">
-                    {/* Theme Toggle */}
-                    <ThemeToggle />
-
-                    {/* Hire Me CTA */}
-                    <a href="#contact"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                        }}
-                        className="hidden md:block">
-                        <Button size="sm" variant="outline">
-                            Hire Me
-                        </Button>
-                    </a>
-
-                    {/* Mobile menu button */}
-                    <button
-                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        className={cn(
-                            "md:hidden p-2 rounded-lg transition-colors",
-                            isDark ? "text-foreground hover:bg-white/10" : "text-slate-700 hover:bg-slate-100"
-                        )}
-                    >
-                        {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
-                    </button>
-                </div>
-            </div>
-
-            {/* Mobile Menu */}
+            {/* ─── Mobile Menu Overlay ─── */}
             <AnimatePresence>
                 {mobileMenuOpen && (
                     <motion.div
@@ -234,53 +242,62 @@ export const Navbar = () => {
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.25 }}
                         className={cn(
-                            "fixed inset-0 z-40 flex flex-col items-center justify-center md:hidden backdrop-blur-2xl",
-                            isDark ? "bg-[#0a0a0a]/95" : "bg-white/95"
+                            "fixed inset-0 z-40 flex flex-col items-center justify-center md:hidden",
+                            isDark ? "bg-[#0a0a0a]/97 backdrop-blur-2xl" : "bg-white/97 backdrop-blur-2xl"
                         )}
                     >
                         <button
                             onClick={() => setMobileMenuOpen(false)}
-                            className={cn("absolute top-6 right-6", isDark ? "text-foreground" : "text-slate-700")}
+                            className={cn("absolute top-6 right-6 p-2 rounded-full cursor-pointer", isDark ? "text-white hover:bg-white/10" : "text-slate-700 hover:bg-slate-100")}
                         >
-                            <X size={28} />
+                            <X size={24} />
                         </button>
-                        <div className="flex flex-col items-center gap-8">
-                            {navLinks.map((link, i) => (
-                                <motion.a
-                                    key={link.name}
-                                    href={link.href}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: i * 0.08 }}
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        setMobileMenuOpen(false);
-                                        const targetId = link.href.substring(1);
-                                        const element = document.getElementById(targetId);
-                                        if (element) {
-                                            element.scrollIntoView({ behavior: "smooth" });
-                                        }
-                                    }}
-                                    className={cn(
-                                        "text-4xl font-display font-bold hover:text-accent transition-colors cursor-pointer",
-                                        isDark ? "text-foreground" : "text-slate-900"
-                                    )}
+                        <div className="flex flex-col items-center gap-6">
+                            {navLinks.map((link, i) => {
+                                const isActive = link.href === "/" ? pathname === "/" : pathname === link.href || pathname?.startsWith(link.href);
+                                return (
+                                    <motion.div
+                                        key={link.name}
+                                        initial={{ opacity: 0, y: 15 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: i * 0.05 }}
+                                    >
+                                        <Link
+                                            href={link.href}
+                                            onClick={() => setMobileMenuOpen(false)}
+                                            className={cn(
+                                                "text-3xl font-display font-bold transition-colors cursor-pointer",
+                                                isActive
+                                                    ? "text-[#FF5A1F]"
+                                                    : isDark ? "text-white hover:text-[#FF5A1F]" : "text-slate-900 hover:text-[#FF5A1F]"
+                                            )}
+                                        >
+                                            {link.name}
+                                        </Link>
+                                    </motion.div>
+                                );
+                            })}
+
+                            <motion.div
+                                initial={{ opacity: 0, y: 15 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: navLinks.length * 0.05 }}
+                                className="pt-4 mt-2 border-t border-white/10 w-32 flex justify-center"
+                            >
+                                <Link
+                                    href="/resume"
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    className="inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full text-sm font-bold text-white bg-accent hover:bg-accent/90"
                                 >
-                                    {link.name}
-                                </motion.a>
-                            ))}
-                            <div className="flex gap-6 mt-6">
-                                <a href={personalInfo.socials.github} className={isDark ? "text-foreground/60 hover:text-white" : "text-slate-500 hover:text-slate-900"} target="_blank" rel="noopener noreferrer">
-                                    <Github size={24} />
-                                </a>
-                                <a href={personalInfo.socials.linkedin} className={isDark ? "text-foreground/60 hover:text-white" : "text-slate-500 hover:text-slate-900"} target="_blank" rel="noopener noreferrer">
-                                    <Linkedin size={24} />
-                                </a>
-                            </div>
+                                    Resume
+                                    <ArrowUpRight size={14} />
+                                </Link>
+                            </motion.div>
                         </div>
                     </motion.div>
                 )}
             </AnimatePresence>
-        </nav>
+        </>
     );
 };
+

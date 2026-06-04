@@ -36,6 +36,11 @@ export interface Project {
   githubUrl: string;
   liveUrl?: string;
   features?: string[];
+  problemStatement?: string;
+  solution?: string;
+  architecture?: string;
+  challenges?: string;
+  futureScope?: string;
 }
 
 export interface Experience {
@@ -47,6 +52,8 @@ export interface Experience {
   active?: boolean;
   tech?: string[];
   certificateUrl?: string;
+  type?: "Industry Internship" | "Virtual Internship";
+  responsibilities?: string[];
 }
 
 export interface Achievement {
@@ -55,6 +62,15 @@ export interface Achievement {
   date: string;
   icon: string;
   link?: string;
+  description?: string;
+}
+
+export interface Certification {
+  title: string;
+  issuer: string;
+  date: string;
+  icon: string;
+  link: string;
 }
 
 export interface Education {
@@ -64,4 +80,5 @@ export interface Education {
   content: string;
   logo?: string;
 }
+
 

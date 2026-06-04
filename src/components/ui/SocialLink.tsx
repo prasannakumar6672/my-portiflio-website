@@ -19,8 +19,8 @@ export const SocialLink = ({ href, icon, label, variant = "pill" }: SocialLinkPr
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                whileHover={{ scale: 1.1, color: "var(--color-accent)" }}
-                className="text-foreground/40 transition-colors"
+                whileHover={{ scale: 1.1 }}
+                className="text-white hover:text-accent transition-colors"
             >
                 {icon}
             </motion.a>

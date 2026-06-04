@@ -1,300 +1,391 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { Github, Linkedin, Mail, Download } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import { ArrowUpRight, Mail, FileText, Code, Cpu, Database, Sparkles, Heart, Lightbulb, Rocket } from "lucide-react";
 import { personalInfo } from "@/lib/data";
-import { Button } from "../ui/Button";
-import { SocialLink } from "../ui/SocialLink";
 
-// ─── Roles typewriter ─────────────────────────────────────────────────────
-const ROLES = [
-    "Software Engineer",
-    "Full Stack Developer",
-    "AI / ML Engineer",
-    "Cloud Explorer",
-    "Hackathon Enthusiast",
-    "Problem Solver",
-];
-
-const Typewriter = () => {
-    const [roleIdx, setRoleIdx] = useState(0);
-    const [text, setText] = useState("");
-    const [isDeleting, setIsDeleting] = useState(false);
+// ─── Reusable Transparent Image Canvas Processor ──────────────────────────────
+const TransparentProfileImage = ({ src, alt }: { src: string; alt: string }) => {
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
+    const [processedSrc, setProcessedSrc] = useState<string | null>(null);
 
     useEffect(() => {
-        const currentRole = ROLES[roleIdx];
+        const img = new window.Image();
+        img.src = src;
+        img.crossOrigin = "anonymous";
+        img.onload = () => {
+            const canvas = canvasRef.current;
+            if (!canvas) return;
+            const ctx = canvas.getContext("2d");
+            if (!ctx) return;
 
-        // Determine timing
-        let speed = 80;
-        if (isDeleting) speed = 40;
-        if (!isDeleting && text === currentRole) speed = 2000; // Pause at top
-        if (isDeleting && text === "") speed = 500; // Pause at bottom
+            canvas.width = img.width;
+            canvas.height = img.height;
 
-        const timeout = setTimeout(() => {
-            if (!isDeleting) {
-                // Handle Typing
-                if (text === currentRole) {
-                    // Start deleting after pause
-                    setIsDeleting(true);
-                } else {
-                    setText(currentRole.slice(0, text.length + 1));
+            ctx.drawImage(img, 0, 0);
+
+            const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imgData.data;
+
+            const width = canvas.width;
+            const height = canvas.height;
+            const visited = new Uint8Array(width * height);
+
+            // Reference color from top-left pixel
+            const refR = data[0];
+            const refG = data[1];
+            const refB = data[2];
+
+            const queue: number[] = [];
+
+            const push = (x: number, y: number) => {
+                if (x < 0 || x >= width || y < 0 || y >= height) return;
+                const idx = y * width + x;
+                if (visited[idx]) return;
+                visited[idx] = 1;
+
+                const pIdx = idx * 4;
+                const r = data[pIdx];
+                const g = data[pIdx + 1];
+                const b = data[pIdx + 2];
+
+                // Calculate color difference from reference background color
+                const dist = Math.sqrt((r - refR) ** 2 + (g - refG) ** 2 + (b - refB) ** 2);
+
+                if (dist < 45) {
+                    data[pIdx + 3] = 0; // Make transparent
+                    queue.push(x, y);
                 }
-            } else {
-                // Handle Deleting
-                if (text === "") {
-                    // Switch to next role after pause
-                    setIsDeleting(false);
-                    setRoleIdx((prev) => (prev + 1) % ROLES.length);
-                } else {
-                    setText(currentRole.slice(0, text.length - 1));
-                }
+            };
+
+            // Seed borders
+            for (let x = 0; x < width; x++) {
+                push(x, 0);
+                push(x, height - 1);
             }
-        }, speed);
+            for (let y = 0; y < height; y++) {
+                push(0, y);
+                push(width - 1, y);
+            }
 
-        return () => clearTimeout(timeout);
-    }, [text, isDeleting, roleIdx]);
+            let head = 0;
+            while (head < queue.length) {
+                const x = queue[head++];
+                const y = queue[head++];
 
-    return (
-        <span className="font-display text-2xl md:text-3xl font-semibold">
-            <span className="text-foreground/80">{text}</span>
-            <motion.span
-                animate={{ opacity: [1, 0, 1] }}
-                transition={{ duration: 0.8, repeat: Infinity }}
-                className="text-accent"
-            >|</motion.span>
-        </span>
-    );
-};
+                // Check neighbors
+                push(x + 1, y);
+                push(x - 1, y);
+                push(x, y + 1);
+                push(x, y - 1);
+            }
 
-// ─── Floating Orbs ─────────────────────────────────────────────────────────
-const Orb = ({ className, delay = 0 }: { className: string; delay?: number }) => (
-    <motion.div
-        className={`absolute rounded-full blur-[120px] pointer-events-none ${className}`}
-        animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.8, 0.5] }}
-        transition={{ duration: 6, repeat: Infinity, repeatType: "reverse", delay }}
-    />
-);
-
-// ─── Particle dots ──────────────────────────────────────────────────────────
-const Particles = () => {
-    const [state, setState] = useState<{ mounted: boolean; particleData: { top: string; left: string; duration: number; delay: number }[] }>({
-        mounted: false,
-        particleData: [],
-    });
-
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            const data = Array.from({ length: 40 }, () => ({
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                duration: 3 + Math.random() * 4,
-                delay: Math.random() * 5,
-            }));
-            setState({ mounted: true, particleData: data });
-        }, 0);
-        return () => clearTimeout(timeout);
-    }, []);
-
-    if (!state.mounted) return null;
+            ctx.putImageData(imgData, 0, 0);
+            setProcessedSrc(canvas.toDataURL());
+        };
+    }, [src]);
 
     return (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {state.particleData.map((p, i) => (
-                <motion.div
-                    key={i}
-                    className="absolute w-1 h-1 rounded-full bg-accent/20"
-                    style={{
-                        top: p.top,
-                        left: p.left,
-                    }}
-                    animate={{
-                        y: [0, -30, 0],
-                        opacity: [0, 0.6, 0],
-                    }}
-                    transition={{
-                        duration: p.duration,
-                        delay: p.delay,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                    }}
+        <div className="relative w-full h-full">
+            <canvas ref={canvasRef} className="hidden" />
+            {processedSrc ? (
+                <img
+                    src={processedSrc}
+                    alt={alt}
+                    className="w-full h-full object-contain object-bottom pointer-events-none select-none"
                 />
-            ))}
+            ) : (
+                <img
+                    src={src}
+                    alt={alt}
+                    className="w-full h-full object-contain object-bottom opacity-30 blur-sm pointer-events-none select-none"
+                />
+            )}
         </div>
     );
 };
 
-// ─── Grid overlay ───────────────────────────────────────────────────────────
-const GridOverlay = () => (
-    <div
-        className="absolute inset-0 pointer-events-none opacity-[0.04]"
-        style={{
-            backgroundImage: `
-                linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px)
-            `,
-            backgroundSize: "60px 60px",
-        }}
-    />
+// ─── Doodles & Sketch Decorations ─────────────────────────────────────────────
+const StarOutline = ({ className, color = "currentColor" }: { className?: string; color?: string }) => (
+    <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2L14.4 9.4H22L15.8 13.9L18.2 21.3L12 16.8L5.8 21.3L8.2 13.9L2 9.4H9.6L12 2Z" />
+    </svg>
 );
 
-// ─── Animated name characters ───────────────────────────────────────────────
-const AnimatedName = ({ name }: { name: string }) => {
-    const words = name.split(" ");
-    return (
-        <h1 className="flex flex-wrap justify-center text-[2.2rem] xs:text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-[1.1] select-none">
-            {words.map((word, wordIdx) => (
-                <span key={wordIdx} className="inline-block whitespace-nowrap mx-[0.2em]">
-                    {word.split("").map((char, charIdx) => {
-                        // Calculate a unique index for staggered animation across words
-                        const previousWordsLength = words.slice(0, wordIdx).join("").length;
-                        const individualIdx = previousWordsLength + charIdx;
+const SparkLines = ({ className }: { className?: string }) => (
+    <svg className={className} width="30" height="25" viewBox="0 0 30 25" fill="none" stroke="#FF5A1F" strokeWidth="2.5" strokeLinecap="round">
+        <path d="M6 20L11 10" />
+        <path d="M15 22V5" />
+        <path d="M24 20L19 10" />
+    </svg>
+);
 
-                        return (
-                            <motion.span
-                                key={charIdx}
-                                initial={{ opacity: 0, y: 60, rotateX: -90, filter: "blur(8px)" }}
-                                animate={{ opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
-                                transition={{
-                                    duration: 0.7,
-                                    delay: 0.5 + individualIdx * 0.04,
-                                    ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
-                                }}
-                                className="inline-block"
-                                style={{
-                                    background: "linear-gradient(135deg, #60a5fa 0%, #a78bfa 45%, #67e8f9 100%)",
-                                    WebkitBackgroundClip: "text",
-                                    WebkitTextFillColor: "transparent",
-                                    backgroundClip: "text",
-                                }}
-                            >
-                                {char}
-                            </motion.span>
-                        );
-                    })}
-                </span>
-            ))}
-        </h1>
-    );
-};
+const CurvedArrow = ({ className }: { className?: string }) => (
+    <svg className={className} width="70" height="70" viewBox="0 0 70 70" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M15 20 C20 30 25 35 30 35 C35 35 38 28 35 25 C32 22 26 28 28 35 C30 42 42 45 50 25" strokeDasharray="4 4" />
+        <path d="M42 22 L50 25 L45 32" />
+    </svg>
+);
 
-
-// ─── Hero ────────────────────────────────────────────────────────────────────
 export const Hero = () => {
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        show: { opacity: 1, transition: { staggerChildren: 0.18, delayChildren: 0.2 } },
-    };
-    const fadeUp = {
-        hidden: { opacity: 0, y: 30 },
-        show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
-    };
+    const roles = [
+        "AI & Full-Stack Developer",
+        "Software Engineer",
+        "Machine Learning Engineer",
+        //"AI Agent Specialist",
+        "Problem Solver"
+    ];
+    const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentRoleIndex((prev) => (prev + 1) % roles.length);
+        }, 3000);
+        return () => clearInterval(interval);
+    }, []);
 
     return (
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-32 md:pb-20">
-            {/* Layers */}
-            <GridOverlay />
-            <Particles />
-            <Orb className="w-[600px] h-[600px] top-0 left-0 bg-blue-600/20" delay={0} />
-            <Orb className="w-[500px] h-[500px] top-1/3 right-0 bg-purple-600/20" delay={2} />
-            <Orb className="w-[400px] h-[400px] bottom-0 left-1/3 bg-cyan-500/15" delay={4} />
+        <section className="relative w-full h-screen lg:h-screen lg:min-h-[700px] min-h-screen flex items-end overflow-hidden bg-transparent transition-colors duration-300">
+            {/* Soft grid background */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
 
-            {/* Shimmer sweep across whole section */}
-            <motion.div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                    background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.04) 50%, transparent 60%)",
-                    backgroundSize: "200% 100%",
-                }}
-                animate={{ backgroundPosition: ["200% 0", "-200% 0"] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "linear", delay: 2 }}
-            />
+            <div className="container mx-auto px-4 sm:px-6 lg:px-14 flex flex-col lg:flex-row items-center lg:items-end justify-between lg:h-full min-h-screen relative z-10 pt-24 pb-0">
+                {/* ══ LEFT CONTENT (48%) ════════════════════════════════════════ */}
+                <div className="w-full lg:w-[48%] flex flex-col justify-center gap-5 text-left lg:pb-28 lg:mb-4 mt-8 lg:mt-0 px-2 sm:px-0">
 
-            <div className="container mx-auto px-6 relative z-10 text-center">
-                <motion.div
-                    variants={containerVariants}
-                    initial="hidden"
-                    animate="show"
-                    className="flex flex-col items-center gap-4 md:gap-5"
-                >
-                    {/* Greeting */}
-                    <motion.p variants={fadeUp} className="text-accent text-base md:text-lg font-medium tracking-widest uppercase">
-                        Hi, myself
-                    </motion.p>
-
-                    {/* Animated Name */}
-                    <div style={{ perspective: "800px" }}>
-                        <AnimatedName name={personalInfo.name} />
+                    {/* Badge Pill with Sparklines */}
+                    <div className="relative self-start mt-2">
+                        <motion.div
+                            initial={{ opacity: 0, y: 15 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5 }}
+                            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-white/5 shadow-sm"
+                        >
+                            <span className="text-xs font-bold tracking-widest text-slate-800 dark:text-slate-300">
+                                HI, I'M 👋
+                            </span>
+                        </motion.div>
+                        {/* Wavy Rays next to badge */}
+                        <SparkLines className="absolute -top-3.5 -right-6 scale-75 rotate-[30deg] opacity-85" />
                     </div>
 
-                    {/* Typewriter Roles */}
-                    <motion.div variants={fadeUp} className="min-h-[2.5rem]">
-                        <Typewriter />
+                    {/* Title */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 25 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.15 }}
+                        className="space-y-2 relative"
+                    >
+                        <h1 className="text-3xl sm:text-5xl lg:text-[64px] font-display font-black leading-[1.05] text-slate-900 dark:text-white tracking-tight uppercase">
+                            <span className="whitespace-nowrap">Prasanna Kumar</span>
+                            <br />
+                            <span className="relative inline-block text-accent">
+                                Chirragoni
+                                {/* Orange hand-drawn underline wave */}
+                                <svg className="absolute -bottom-3.5 left-0 w-full h-4 text-accent" viewBox="0 0 200 12" fill="none" preserveAspectRatio="none">
+                                    <path d="M2 10C30 3 70 3 100 8C130 13 170 8 198 2" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+                                </svg>
+                            </span>
+                        </h1>
                     </motion.div>
 
-                    {/* Bio */}
-                    <motion.p variants={fadeUp} className="text-base md:text-lg text-foreground/50 max-w-xl leading-relaxed">
-                        {personalInfo.bio}
+                    {/* Subtitle */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.25 }}
+                        className="text-lg sm:text-xl font-body font-bold text-slate-800 dark:text-slate-200 mt-2 flex items-center gap-2 tracking-wide"
+                    >
+                        <div className="relative overflow-hidden h-[30px] flex items-center">
+                            <AnimatePresence mode="wait">
+                                <motion.span
+                                    key={currentRoleIndex}
+                                    initial={{ y: 15, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    exit={{ y: -15, opacity: 0 }}
+                                    transition={{ duration: 0.25, ease: "easeInOut" }}
+                                    className="inline-block"
+                                >
+                                    {roles[currentRoleIndex]}
+                                </motion.span>
+                            </AnimatePresence>
+                        </div>
+                        <span className="text-accent font-mono font-bold">&lt;/&gt;</span>
+                    </motion.div>
+
+                    {/* Description */}
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.35 }}
+                        className="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed max-w-lg font-medium"
+                    >
+                        I build intelligent web applications and AI-powered solutions that solve real-world problems and create meaningful impact.
                     </motion.p>
 
                     {/* CTA Buttons */}
-                    <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 mt-4">
-                        <motion.a
-                            href="#projects"
-                            whileHover={{ scale: 1.04 }}
-                            whileTap={{ scale: 0.97 }}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.45 }}
+                        className="flex flex-wrap gap-4 mt-2 z-30"
+                    >
+                        <Link
+                            href="/projects"
+                            className="inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full font-bold text-white bg-accent hover:bg-accent/90 hover:scale-105 transition-all shadow-lg shadow-accent/25 cursor-pointer text-sm"
                         >
-                            <Button size="lg" className="gap-2 relative overflow-hidden group">
-                                <motion.span
-                                    className="absolute inset-0 bg-white/10"
-                                    initial={{ x: "-100%" }}
-                                    whileHover={{ x: "100%" }}
-                                    transition={{ duration: 0.4 }}
-                                />
-                                View Projects <span>→</span>
-                            </Button>
-                        </motion.a>
-                        <motion.a href="#contact" whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-                            <Button variant="outline" size="lg">Get in Touch</Button>
-                        </motion.a>
-                        <motion.a
-                            href={personalInfo.resumeUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            whileHover={{ scale: 1.04 }}
-                            whileTap={{ scale: 0.97 }}
+                            Explore Projects
+                            <ArrowUpRight size={15} />
+                        </Link>
+                        <Link
+                            href="/contact"
+                            className="inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full font-bold text-slate-800 dark:text-white border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 hover:bg-slate-50 dark:hover:bg-white/10 hover:scale-105 transition-all cursor-pointer text-sm"
                         >
-                            <Button variant="secondary" size="lg" className="gap-2">
-                                <Download className="w-4 h-4" /> Resume
-                            </Button>
-                        </motion.a>
+                            Contact Me
+                            <Mail size={14} className="text-accent" />
+                        </Link>
                     </motion.div>
+                </div>
 
-                    {/* Social Pills */}
-                    <motion.div variants={fadeUp} className="flex gap-3 mt-6">
-                        <SocialLink href={personalInfo.socials.github} icon={<Github size={20} />} label="GitHub" />
-                        <SocialLink href={personalInfo.socials.linkedin} icon={<Linkedin size={20} />} label="LinkedIn" />
-                        <SocialLink href={personalInfo.socials.email} icon={<Mail size={20} />} label="Email" />
-                    </motion.div>
-                </motion.div>
+                {/* ══ RIGHT CONTENT (52%) ═══════════════════════════════════════ */}
+                <div className="w-full lg:w-[52%] flex items-end justify-center relative min-h-[340px] sm:min-h-[480px] lg:min-h-[680px] mt-4 lg:mt-0 select-none self-end h-full">
+
+                    {/* ── Portrait & Circle Wrapper ── */}
+                    <div className="relative z-10 w-[240px] h-[310px] sm:w-[380px] sm:h-[490px] lg:w-[550px] lg:h-[700px] flex items-end justify-center self-end left-0 lg:left-[-17%]">
+                        {/* Semi-circle orange background - centered exactly behind portrait */}
+                        <motion.div
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                            className="absolute rounded-full w-[310px] h-[310px] sm:w-[500px] sm:h-[500px] lg:w-[680px] lg:h-[680px] bg-accent z-0 -bottom-[150px] sm:-bottom-[220px] lg:-bottom-[280px] left-1/2 -translate-x-1/2 shadow-2xl"
+                        />
+
+                        {/* Cutout Portrait Image Container - flush at bottom */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.25 }}
+                            className="relative z-10 w-full h-full"
+                        >
+                            <TransparentProfileImage
+                                src={personalInfo.avatar}
+                                alt="Prasanna Kumar Chirragoni"
+                            />
+                        </motion.div>
+
+                        {/* Doodles grouped inside the wrapper */}
+                        {/* Stars Outline */}
+                        <StarOutline className="absolute top-[48%] left-[10%] lg:left-[14%] z-20 text-slate-800 dark:text-white opacity-40 scale-95" />
+                        <StarOutline className="absolute top-[54%] left-[2%] lg:left-[5%] z-20 text-accent scale-75" />
+                        <StarOutline className="absolute top-[45%] right-[2%] lg:right-[6%] z-20 text-slate-800 dark:text-white opacity-40 scale-100" />
+
+                        {/* Orange Sparkles */}
+                        <SparkLines className="absolute top-[37%] right-[8%] lg:right-[14%] z-20 scale-110" />
+                    </div>
+
+                    {/* ── Right Side Panel: Quote & Info Cards Stack ── */}
+                    <div className="absolute hidden sm:flex -top-10 sm:top-2 lg:top-[2%] right-1 sm:right-4 lg:right-[4%] z-20 flex-col gap-4 w-[170px] sm:w-[230px]">
+                        {/* Quote Card */}
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.8, x: 20 }}
+                            animate={{ opacity: 1, scale: 1, x: 0 }}
+                            transition={{ duration: 0.6, delay: 0.7 }}
+                            whileHover={{ y: -4 }}
+                            className="bg-white dark:bg-[#0f0f0f] border border-slate-200 dark:border-white/10 rounded-2xl p-4.5 shadow-lg shadow-slate-200/30 dark:shadow-none w-full"
+                        >
+                            <div className="flex justify-between items-start mb-2">
+                                <span className="text-accent font-display text-4xl leading-none">“</span>
+                                <div className="w-7 h-7 rounded-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center text-rose-500 shadow-sm">
+                                    <Heart size={13} fill="currentColor" />
+                                </div>
+                            </div>
+                            <p className="text-slate-800 dark:text-white font-body font-black text-sm sm:text-base leading-snug tracking-tight">
+                                Code. Build.
+                                <br />
+                                Solve. Innovate.
+                            </p>
+                            <p className="text-[10px] sm:text-xs font-bold text-accent mt-2">
+                                That's my mindset.
+                            </p>
+                        </motion.div>
+
+                        {/* Three Cards Stack */}
+                        <div className="flex flex-col gap-3 w-full">
+                            {[
+                                {
+                                    title: "Clean Code",
+                                    desc: "Scalable & Maintainable",
+                                    icon: <Code size={14} className="text-accent" />
+                                },
+                                {
+                                    title: "Problem Solver",
+                                    desc: "Analytical & Creative",
+                                    icon: <Lightbulb size={14} className="text-accent" />
+                                },
+                                {
+                                    title: "Always Learning",
+                                    desc: "Curious & Consistent",
+                                    icon: <Rocket size={14} className="text-accent" />
+                                }
+                            ].map((card, index) => (
+                                <motion.div
+                                    key={card.title}
+                                    initial={{ opacity: 0, x: 20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: 0.9 + index * 0.08, duration: 0.5 }}
+                                    whileHover={{ x: -4 }}
+                                    className="flex items-center gap-3.5 py-1 bg-transparent"
+                                >
+                                    <div className="w-9 h-9 rounded-xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center shrink-0 shadow-sm">
+                                        {card.icon}
+                                    </div>
+                                    <div className="flex flex-col min-w-0">
+                                        <span className="text-slate-850 dark:text-slate-200 font-bold text-xs sm:text-sm">
+                                            {card.title}
+                                        </span>
+                                        <span className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 font-semibold leading-normal">
+                                            {card.desc}
+                                        </span>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+
+                        {/* Dashed Arrow pointing to the cards stack */}
+                        <motion.div
+                            animate={{
+                                x: [0, -3, 0],
+                                y: [0, -3, 0]
+                            }}
+                            transition={{
+                                duration: 3.5,
+                                repeat: Infinity,
+                                ease: "easeInOut"
+                            }}
+                            className="absolute -bottom-[75px] left-[-35px] lg:left-[-45px] z-20"
+                        >
+                            <CurvedArrow className="text-accent opacity-90 scale-110" />
+                        </motion.div>
+                    </div>
+
+
+                </div>
             </div>
 
-            {/* Mouse scroll indicator */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 3 }}
-                className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-            >
-                <span className="text-[10px] uppercase tracking-widest text-foreground/30 font-medium">Scroll</span>
-                <div className="w-5 h-8 rounded-full border border-foreground/20 flex items-start justify-center pt-1.5">
+            {/* Bottom Scroll Reminder */}
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 opacity-60 print:hidden z-20">
+                <span className="text-[8px] tracking-[0.2em] uppercase font-bold text-slate-400">SCROLL DOWN</span>
+                <div className="w-5 h-8 rounded-full border border-slate-300 dark:border-white/20 flex items-start justify-center pt-1.5">
                     <motion.div
-                        className="w-1 h-2 bg-foreground/40 rounded-full"
-                        animate={{ y: [0, 12, 0], opacity: [1, 0, 1] }}
-                        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                        className="w-1 h-1.5 rounded-full bg-accent"
+                        animate={{ y: [0, 8, 0] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
                     />
                 </div>
-            </motion.div>
+            </div>
         </section>
     );
 };
+
