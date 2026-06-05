@@ -2,7 +2,6 @@
 
 import { Experience } from "@/components/sections/Experience";
 import { Achievements } from "@/components/sections/Achievements";
-import { GithubSection } from "@/components/sections/GithubSection";
 
 export default function ExperiencePage() {
   return (

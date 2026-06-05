@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowLeft, Download, Printer, Mail, MapPin, Linkedin, Github, Globe } from "lucide-react";
+import { ArrowLeft, Download, Printer, Mail, MapPin, Linkedin, Github } from "lucide-react";
 import Link from "next/link";
 import { personalInfo, experience, techStack, education, achievements } from "@/lib/data";
 

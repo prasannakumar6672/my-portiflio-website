@@ -6,7 +6,7 @@ import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { IntroWrapper } from "@/components/layout/IntroWrapper";
+import { IntroWrapper } from "@/components/layout/Intro";
 
 export const metadata: Metadata = {
   title: {
