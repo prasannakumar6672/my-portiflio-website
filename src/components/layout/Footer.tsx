@@ -20,7 +20,7 @@ import { personalInfo, footerNavLinks } from "@/lib/data";
 import { Logo } from "@/components/ui/Logo";
 
 // Map string icon names to Lucide icons
-const iconMap: Record<string, React.ComponentType<any>> = {
+const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
     User,
     FolderOpen,
     Briefcase,

@@ -184,3 +184,27 @@ export const Intro = ({ onComplete }: { onComplete: () => void }) => {
         </AnimatePresence>
     );
 };
+
+/* ─── Intro Wrapper ───────────────────────────────────────────────────── */
+export const IntroWrapper = ({ children }: { children: React.ReactNode }) => {
+    const [introDone, setIntroDone] = useState(false);
+
+    const handleComplete = useCallback(() => {
+        setIntroDone(true);
+    }, []);
+
+    return (
+        <>
+            {!introDone && <Intro onComplete={handleComplete} />}
+            <div
+                className="transition-opacity duration-700 ease-in-out"
+                style={{
+                    opacity: introDone ? 1 : 0,
+                    visibility: introDone ? "visible" : "hidden"
+                }}
+            >
+                {children}
+            </div>
+        </>
+    );
+};

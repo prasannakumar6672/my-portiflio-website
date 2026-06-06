@@ -87,7 +87,7 @@ export const Navbar = () => {
                                 <Link
                                     key={link.name}
                                     href={link.href}
-                                    className="relative px-3.5 py-1.5 text-xs font-semibold tracking-wide cursor-pointer transition-colors duration-200 hover:text-white"
+                                    className="relative px-3.5 py-1.5 text-xs font-display font-bold uppercase tracking-wider cursor-pointer transition-colors duration-200 hover:text-white"
                                     style={{
                                         color: isActive ? "#FF5A1F" : "rgba(255,255,255,0.55)"
                                     }}
@@ -127,7 +127,7 @@ export const Navbar = () => {
                             return (
                                 <Link
                                     href={link.href}
-                                    className="relative px-3.5 py-1.5 text-xs font-semibold tracking-wide cursor-pointer transition-colors duration-200 hover:text-white"
+                                    className="relative px-3.5 py-1.5 text-xs font-display font-bold uppercase tracking-wider cursor-pointer transition-colors duration-200 hover:text-white"
                                     style={{
                                         color: isActive ? "#FF5A1F" : "rgba(255,255,255,0.55)"
                                     }}
@@ -150,7 +150,7 @@ export const Navbar = () => {
                             return (
                                 <Link
                                     href={link.href}
-                                    className="relative px-3.5 py-1.5 text-xs font-semibold tracking-wide cursor-pointer transition-colors duration-200 hover:text-white"
+                                    className="relative px-3.5 py-1.5 text-xs font-display font-bold uppercase tracking-wider cursor-pointer transition-colors duration-200 hover:text-white"
                                     style={{
                                         color: isActive ? "#FF5A1F" : "rgba(255,255,255,0.55)"
                                     }}
@@ -173,7 +173,7 @@ export const Navbar = () => {
                             return (
                                 <Link
                                     href={link.href}
-                                    className="relative px-3.5 py-1.5 text-xs font-semibold tracking-wide cursor-pointer transition-colors duration-200 hover:text-white"
+                                    className="relative px-3.5 py-1.5 text-xs font-display font-bold uppercase tracking-wider cursor-pointer transition-colors duration-200 hover:text-white"
                                     style={{
                                         color: isActive ? "#FF5A1F" : "rgba(255,255,255,0.55)"
                                     }}
