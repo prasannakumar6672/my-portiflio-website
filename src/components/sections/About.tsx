@@ -118,7 +118,7 @@ export const About = () => {
                                 <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-slate-100 dark:bg-neutral-900 border border-slate-200 dark:border-white/10 shadow-sm flex-grow">
                                     <Image
                                         src={personalInfo.avatar}
-                                        alt="Prasanna Kumar"
+                                        alt="Chirragoni Prasanna Kumar portrait"
                                         fill
                                         className="object-cover object-top filter grayscale contrast-115 hover:grayscale-0 transition-all duration-700"
                                         sizes="(max-width: 768px) 100vw, 400px"

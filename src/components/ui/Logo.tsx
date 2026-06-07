@@ -24,7 +24,7 @@ export const Logo = ({ className, showText = true }: LogoProps) => {
                 <div className="w-10 h-10 bg-[#0a0a0a] rounded-lg flex items-center justify-center overflow-hidden relative z-10 border border-white/15 group-hover:border-accent/40 transition-colors duration-300">
                     <Image
                         src="/images/logo.jpeg"
-                        alt="Logo"
+                        alt="Chirragoni Prasanna Kumar Portfolio Logo"
                         fill
                         className="object-cover"
                         sizes="40px"

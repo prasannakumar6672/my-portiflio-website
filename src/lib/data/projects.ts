@@ -25,25 +25,24 @@ export const projects: Project[] = [
     },
     {
         id: "road-damage-detection",
-        title: "AI Road Damage Detection & Civic Reporting",
+        title: "AI-Powered Road Damage Detection & Smart Civic Complaint System",
         tagline: "Smart city platform that detects road damage and allows citizens to report civic issues",
-        description: "A smart city platform powered by AI vision that automatically detects road damage from images and enables citizens to report civic issues. Features a comprehensive reporting dashboard for municipal authorities to prioritize repairs.",
+        description: "A full-stack complaint management system featuring role-based JWT authentication, automated road damage detection using the Roboflow pretrained API, a RESTful backend with MongoDB, and a secure image upload pipeline using Multer and Cloudinary.",
         image: "/images/ai road damage and civic complaint system.jpeg",
-        tech: ["Next.js", "Node.js", "AI Vision"],
+        tech: ["React.js", "Node.js", "Express.js", "MongoDB", "JWT", "Multer", "Cloudinary", "Roboflow API"],
         githubUrl: "https://github.com/prasannakumar6672/AI-Road-Damage-Civic-Complaint-System",
         liveUrl: "https://ai-road-damage-civic-complaint-syst.vercel.app/",
         features: [
-            "AI-powered road damage identification",
-            "Citizen reporting interface",
-            "Municipal authority dashboard",
-            "Automated triage and prioritization",
-            "Real-time status tracking for reports"
+            "Built full-stack complaint management system with role-based JWT authentication (Citizen & Officials)",
+            "Integrated Roboflow pretrained API to detect potholes, cracks, and erosion with severity scoring",
+            "Designed RESTful backend architecture with MongoDB schema and complaint lifecycle tracking",
+            "Developed secure image upload pipeline using Multer and Cloudinary cloud storage"
         ],
-        problemStatement: "Potholes and structural road damage lead to high vehicle repair costs and accidents. Manual surveying by city maintenance departments is slow, expensive, and reactive, relying on user complaints that are often poorly categorized.",
-        solution: "A complete smart-city reporting system that automates damage classification using an AI vision engine on citizen-submitted photographs, automatically mapping GPS locations and scheduling repairs based on severity.",
-        architecture: "Next.js frontend connects to an Express.js backend. User image uploads are piped to an AI vision inference engine. Damage locations, types (alligator cracking, deep potholes), and severity indexes are mapped in real-time.",
-        challenges: "Determining physical dimensions and severity score of road damage using single 2D photos without scale reference. Solved by calibrating aspect ratios using standard lane width guidelines and temporal degradation models.",
-        futureScope: "Deploying the vision models on dashcams of municipal garbage trucks or public buses to map the entire city's road network automatically every week."
+        problemStatement: "Municipal road maintenance is often reactive, relying on manual reports that lack categorization and visual proof, leading to delays in repairs.",
+        solution: "Built a full-stack system with role-based JWT authentication and Roboflow API integration to automatically identify and score road damage severity, streamlining reporting and verification.",
+        architecture: "React.js and Node.js/Express.js backend with MongoDB storage. Images are processed via the Roboflow vision model, and files are securely stored on Cloudinary.",
+        challenges: "Ensuring secure role-based access control and high-performance image uploads while handling automated inference pipelines. Solved using JWT middleware and optimized Multer streaming to Cloudinary.",
+        futureScope: "Integrating real-time mapping of complaints via Google Maps API and scheduling automated maintenance routes for city workers."
     },
     {
         id: "water-body-encroachment",
@@ -87,5 +86,44 @@ export const projects: Project[] = [
         architecture: "Built with LangChain and Python, using vector storage (ChromaDB/Pinecone) to index document embeddings. Semantic searches pull relevant context chunks, and the resulting prompt is orchestrated through custom LLM chains.",
         challenges: "Context pollution, where retrieved documents contain irrelevant text that degrades output quality. Solved by implementing dynamic ranking (Reranking) using cross-encoders and metadata pre-filtering.",
         futureScope: "Adding agentic reasoning loops that let the chatbot run SQL queries, execute web search lookups, and summarize long-term conversational memory profiles."
+    },
+    {
+        id: "vital-agent",
+        title: "Vital Agent — AI Health Risk Prediction System",
+        tagline: "AI-based health monitoring and personalized risk prediction system",
+        description: "An intelligent healthcare platform that predicts patient health risks by running TensorFlow LSTM models on sequential vitals data. Integrates Gemini API for personalized health advice and threshold-based alerts.",
+        image: "",
+        tech: ["Python", "TensorFlow (LSTM)", "REST APIs", "Gemini API"],
+        githubUrl: "https://github.com/prasannakumar6672",
+        features: [
+            "Developed AI-based health risk prediction system using TensorFlow LSTM on 7-day sequential vitals data",
+            "Generated probabilistic risk scores (0-1) and integrated trained model (.h5) into backend for real-time inference",
+            "Implemented threshold-based alert mechanism and Gemini API integration for personalized health recommendations"
+        ],
+        problemStatement: "Monitoring dynamic patient vitals and identifying critical deterioration risks early requires continuous analysis of complex temporal sequences, which standard thresholds fail to do effectively.",
+        solution: "Built a sequential prediction engine utilizing TensorFlow LSTM to generate probabilistic health risk scores from 7-day vitals, combined with Gemini API for automated, custom health recommendations.",
+        architecture: "A Python-based backend that handles sequential vitals analysis, serving inference through REST APIs, and utilizing the Gemini API to format personalized risk mitigating actions.",
+        challenges: "Maintaining low-latency inference on LSTM models and generating reliable recommendations based on highly variable patient metrics. Solved by calibrating threshold alerts and structuring prompt templates for Gemini.",
+        futureScope: "Integrating real-time wearables synchronization (such as Fitbit or Apple Watch) to enable continuous background risk evaluation."
+    },
+    {
+        id: "preptrack",
+        title: "PrepTrack — Job Interview & Exam Preparation Tracker",
+        tagline: "Intelligent study planner and interview prep dashboard",
+        description: "A comprehensive preparation tracking application featuring customizable study templates, progress monitoring dashboards, mock interview performance analytics, and dynamic question banks.",
+        image: "",
+        tech: ["Next.js", "React.js", "Node.js", "MongoDB", "Tailwind CSS"],
+        githubUrl: "https://github.com/prasannakumar6672",
+        features: [
+            "Customizable study schedule planner with dynamic milestone tracking",
+            "Interactive mock interview session logger with analytical feedback dashboards",
+            "Structured question bank system with spaced repetition flags",
+            "Dynamic progress charts visualizing category performance"
+        ],
+        problemStatement: "Candidates preparing for technical interviews lack a single structured workspace to plan schedules, track review retention, analyze mock performance, and organize customized question banks.",
+        solution: "Designed a high-performance preparation hub, PrepTrack, featuring spaced repetition tracking, progress visualizations, and analytics logs to keep candidates structured and motivated.",
+        architecture: "Next.js frontend with Tailwind CSS layout, Express/Node.js backend endpoints, and MongoDB database storage representing prep milestones and question lists.",
+        challenges: "Orchestrating spaced repetition scheduling logic and rendering responsive progress calendars. Solved by building lightweight custom interval algorithms and mapping data through canvas-based charting.",
+        futureScope: "Integrating OpenAI mock audio interview evaluations and automatic code execution sandboxes."
     },
 ];

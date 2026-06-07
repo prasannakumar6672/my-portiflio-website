@@ -9,23 +9,64 @@ import { Footer } from "@/components/layout/Footer";
 import { IntroWrapper } from "@/components/layout/Intro";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://prasannakumar.dev"),
   title: {
-    default: `${personalInfo.name} — Developer Portfolio`,
-    template: `%s | ${personalInfo.name}`,
+    default: "Chirragoni Prasanna Kumar | AI/ML Engineer & Full Stack Developer",
+    template: "%s | Chirragoni Prasanna Kumar",
   },
-  description: personalInfo.bio,
-  keywords: ["Full Stack Developer", "AI/ML Engineer", "Next.js", "TypeScript", "React"],
-  authors: [{ name: personalInfo.name, url: "https://github.com/prasannakumar6672" }],
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "https://github.com/prasannakumar6672",
-    siteName: `${personalInfo.name} Portfolio`,
-    images: ["/images/about.jpeg"],
+  description: "Portfolio of Chirragoni Prasanna Kumar showcasing AI/ML projects, Full Stack applications, Software Engineering experience, internships, cloud technologies, and intelligent systems.",
+  keywords: [
+    "Chirragoni Prasanna Kumar",
+    "Prasanna Kumar",
+    "AI/ML Engineer Portfolio",
+    "Full Stack Developer Portfolio",
+    "Software Engineer Portfolio",
+    "Computer Vision Projects",
+    "Data Engineering Portfolio",
+    "Next.js",
+    "TypeScript",
+    "React",
+    "Developer Portfolio",
+    "Intelligent Systems"
+  ],
+  authors: [{ name: "Chirragoni Prasanna Kumar", url: "https://prasannakumar.dev" }],
+  creator: "Chirragoni Prasanna Kumar",
+  publisher: "Chirragoni Prasanna Kumar",
+  alternates: {
+    canonical: "/",
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://prasannakumar.dev",
+    siteName: "Chirragoni Prasanna Kumar Portfolio",
+    title: "Chirragoni Prasanna Kumar Portfolio",
+    description: "AI/ML Engineer, Full Stack Developer, Software Engineer.",
+    images: [
+      {
+        url: "/images/about.jpeg",
+        width: 1200,
+        height: 630,
+        alt: "Chirragoni Prasanna Kumar Portfolio Showcase",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Chirragoni Prasanna Kumar Portfolio",
+    description: "AI/ML Engineer, Full Stack Developer, Software Engineer.",
+    images: ["/images/about.jpeg"],
   },
   icons: {
     icon: "/images/logo.jpeg",
@@ -42,14 +83,21 @@ export default function RootLayout({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: personalInfo.name,
-    jobTitle: personalInfo.title,
-    description: personalInfo.bio,
-    url: "https://github.com/prasannakumar6672",
-    sameAs: [
-      personalInfo.socials.github,
-      personalInfo.socials.linkedin,
+    name: "Chirragoni Prasanna Kumar",
+    url: "https://prasannakumar.dev",
+    jobTitle: [
+      "AI/ML Engineer",
+      "Software Engineer",
+      "Full Stack Developer"
     ],
+    alumniOf: {
+      "@type": "EducationalOrganization",
+      name: "CMR Technical Campus"
+    },
+    sameAs: [
+      "https://github.com/prasannakumar6672",
+      "https://www.linkedin.com/in/prashuyadav360"
+    ]
   };
 
   return (

@@ -20,9 +20,9 @@ export const achievements: Achievement[] = [
     {
         title: "NeuraX Hackathon — Technical Lead",
         issuer: "NeuraX",
-        date: "2025",
+        date: "2026",
         icon: "Code",
         link: "https://drive.google.com/file/d/1D_9J9CHYZYq1StNovAyijg1zkv24x0TT/view?usp=drivesdk",
-        description: "Served as Technical Lead for the NeuraX hackathon web infrastructure, leading a team of developers and implementing responsive animated web systems."
+        description: "Served as Technical Lead for the NeuraX hackathon web infrastructure, building and maintaining the event website and leading a team of developers."
     },
 ];

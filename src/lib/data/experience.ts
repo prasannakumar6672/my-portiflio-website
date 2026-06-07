@@ -6,8 +6,9 @@ export const experience: Experience[] = [
         role: "React & Firebase Developer Intern",
         duration: "May 2026 – Present",
         description: [
-            "Working on modern web applications using React and Firebase. Contributing to frontend development, authentication systems, database integration, responsive UI implementation, and real-world product development.",
-            "Collaborating with team members to build scalable and user-friendly web experiences."
+            "Developed responsive web applications using React.js, improving user experience and interface performance.",
+            "Integrated Firebase Authentication for secure user login and registration.",
+            "Implemented Firestore database operations for real-time data storage and retrieval."
         ],
         responsibilities: [
             "React Application Development: Crafted responsive views, modular components, and optimized client-side state.",
@@ -25,10 +26,11 @@ export const experience: Experience[] = [
     {
         company: "CS Tech Solutions (Aeccentric)",
         role: "Junior AI Tools Engineer Intern",
-        duration: "March 2026 – Present",
+        duration: "Mar 2026 – May 2026",
         description: [
-            "Working on AI-powered tools, automation systems, prompt engineering workflows, and modern AI development practices.",
-            "Contributing to intelligent applications, AI integrations, workflow automation, and productivity-focused solutions."
+            "Assisted in developing AI-powered tools to automate business workflows and improve productivity.",
+            "Worked with Python and AI APIs to integrate intelligent features into web applications.",
+            "Gained hands-on experience with prompt engineering, automation tools, and modern AI technologies."
         ],
         responsibilities: [
             "AI Tool Development: Built custom workflow scripts leveraging generative AI and API automation.",
@@ -40,7 +42,7 @@ export const experience: Experience[] = [
             "AI-Assisted Development: Integrated AI-assisted coding protocols to accelerate development velocity."
         ],
         tech: ["AI Tools", "Prompt Engineering", "Automation", "OpenAI Ecosystem", "Product Development", "Research & Analysis"],
-        active: true,
+        active: false,
         type: "Industry Internship"
     },
     {

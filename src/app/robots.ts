@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
             userAgent: "*",
             allow: "/",
         },
-        sitemap: "https://alexvance.dev/sitemap.xml",
+        sitemap: "https://prasannakumar.dev/sitemap.xml",
     };
 }

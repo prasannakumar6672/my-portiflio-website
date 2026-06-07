@@ -21,6 +21,16 @@ const techColors: Record<string, string> = {
     LLM: "bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-500/20",
     "Tailwind CSS": "bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/20",
     "Framer Motion": "bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20",
+    "Express.js": "bg-neutral-500/10 text-neutral-600 dark:text-neutral-400 border-neutral-500/20",
+    MongoDB: "bg-green-600/10 text-green-700 dark:text-green-400 border-green-600/20",
+    JWT: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20",
+    Multer: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20",
+    Cloudinary: "bg-blue-400/10 text-blue-500 dark:text-blue-300 border-blue-400/20",
+    "Roboflow API": "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20",
+    "TensorFlow (LSTM)": "bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/20",
+    "Gemini API": "bg-pink-500/10 text-pink-650 dark:text-pink-400 border-pink-500/20",
+    "REST APIs": "bg-teal-500/10 text-teal-600 dark:text-teal-450 border-teal-500/20",
+    "React.js": "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-500/20",
 };
 
 const getTechClass = (tech: string) =>
@@ -43,6 +53,10 @@ const getProjectCategories = (id: string): string[] => {
             return ["ai-nlp"];
         case "neurax-hackathon":
             return ["web-apps"];
+        case "vital-agent":
+            return ["ai-nlp"];
+        case "preptrack":
+            return ["web-apps"];
         default:
             return [];
     }
@@ -58,6 +72,10 @@ const getFeaturedBadge = (id: string) => {
             return { text: "LLM & RAG Agent", color: "border-purple-500/30 text-purple-400 bg-purple-500/5" };
         case "neurax-hackathon":
             return { text: "Guinness Record Venue", color: "border-emerald-500/30 text-emerald-450 bg-emerald-500/5" };
+        case "vital-agent":
+            return { text: "AI Health Predictor", color: "border-rose-500/30 text-rose-400 bg-rose-500/5" };
+        case "preptrack":
+            return { text: "Prep Planner", color: "border-blue-500/30 text-blue-400 bg-blue-500/5" };
         default:
             return null;
     }

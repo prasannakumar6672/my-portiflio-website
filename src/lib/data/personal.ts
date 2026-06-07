@@ -7,7 +7,7 @@ export const personalInfo: PersonalInfo = {
     avatar: "/images/about.jpeg",
     email: "prasannakumar6672@gmail.com",
     location: "Hyderabad, India",
-    resumeUrl: "/resume/prasanna-kumar-resume.pdf",
+    resumeUrl: "/resume/Chirragoni_Prasanna_Kumar_Resume.pdf",
     socials: {
         github: "https://github.com/prasannakumar6672",
         linkedin: "https://linkedin.com/in/prashuyadav360",

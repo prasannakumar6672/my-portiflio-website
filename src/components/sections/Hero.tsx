@@ -265,7 +265,7 @@ export const Hero = () => {
                         >
                             <TransparentProfileImage
                                 src={personalInfo.avatar}
-                                alt="Prasanna Kumar Chirragoni"
+                                alt="Chirragoni Prasanna Kumar portrait"
                             />
                         </motion.div>
 
