@@ -7,6 +7,7 @@ import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { IntroWrapper } from "@/components/layout/Intro";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://prasannakumar.dev"),
@@ -108,6 +109,18 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-NL7XBRKSZ1"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-NL7XBRKSZ1');
+          `}
+        </Script>
       </head>
       <body
         className="antialiased font-body bg-background text-foreground"
