@@ -141,13 +141,13 @@ export const Hero = () => {
     }, []);
 
     return (
-        <section className="relative w-full h-screen lg:h-screen lg:min-h-[700px] min-h-screen flex items-end overflow-hidden bg-transparent transition-colors duration-300">
+        <section className="relative w-full lg:h-screen lg:min-h-[700px] min-h-0 h-auto flex items-end overflow-hidden bg-transparent transition-colors duration-300">
             {/* Soft grid background */}
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
 
-            <div className="container mx-auto px-4 sm:px-6 lg:px-14 flex flex-col lg:flex-row items-center lg:items-end justify-between lg:h-full min-h-screen relative z-10 pt-24 pb-0">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-14 flex flex-col lg:flex-row items-center lg:items-end justify-between lg:h-full lg:min-h-screen min-h-0 h-auto relative z-10 pt-[calc(var(--navbar-height,76px)+20px)] sm:pt-[calc(var(--navbar-height,76px)+24px)] md:pt-[calc(var(--navbar-height,76px)+32px)] pb-0">
                 {/* ══ LEFT CONTENT (48%) ════════════════════════════════════════ */}
-                <div className="w-full lg:w-[48%] flex flex-col justify-center gap-5 text-left lg:pb-28 lg:mb-4 mt-8 lg:mt-0 px-2 sm:px-0">
+                <div className="w-full lg:w-[48%] flex flex-col justify-center gap-4 lg:gap-5 text-left lg:pb-28 lg:mb-4 mt-0 lg:mt-0 px-2 sm:px-0">
 
                     {/* Badge Pill with Sparklines */}
                     <div className="relative self-start mt-2">
@@ -244,7 +244,7 @@ export const Hero = () => {
                 </div>
 
                 {/* ══ RIGHT CONTENT (52%) ═══════════════════════════════════════ */}
-                <div className="w-full lg:w-[52%] flex items-end justify-center relative min-h-[340px] sm:min-h-[480px] lg:min-h-[680px] mt-4 lg:mt-0 select-none self-end h-full">
+                <div className="w-full lg:w-[52%] flex items-end justify-center relative min-h-[310px] sm:min-h-[490px] lg:min-h-[680px] mt-6 lg:mt-0 select-none self-end h-full">
 
                     {/* ── Portrait & Circle Wrapper ── */}
                     <div className="relative z-10 w-[240px] h-[310px] sm:w-[380px] sm:h-[490px] lg:w-[550px] lg:h-[700px] flex items-end justify-center self-end left-0 lg:left-[-17%]">

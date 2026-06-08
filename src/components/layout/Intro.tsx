@@ -27,7 +27,7 @@ const Line = ({
             initial={{ y: "110%", opacity: 0 }}
             animate={{ y: "0%", opacity: 1 }}
             transition={{ delay, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className={`font-black tracking-tight leading-tight ${size} ${accent ? "text-accent" : "text-foreground"
+            className={`font-black tracking-tight leading-tight ${size} ${accent ? "text-accent" : "text-white"
                 }`}
         >
             {text}
@@ -150,10 +150,10 @@ export const Intro = ({ onComplete }: { onComplete: () => void }) => {
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1.2 }}
                         onClick={skip}
-                        className="absolute bottom-7 right-8 text-[11px] uppercase tracking-[0.2em] text-foreground/25 hover:text-foreground/60 transition-colors duration-200 font-medium flex items-center gap-2 group"
+                        className="absolute bottom-7 right-8 text-[11px] uppercase tracking-[0.2em] text-white/30 hover:text-white/70 transition-colors duration-200 font-medium flex items-center gap-2 group"
                     >
                         Skip
-                        <span className="w-5 h-px bg-foreground/20 group-hover:bg-foreground/50 transition-colors duration-200 group-hover:w-8 transition-all" />
+                        <span className="w-5 h-px bg-white/20 group-hover:bg-white/50 transition-colors duration-200 group-hover:w-8 transition-all" />
                     </motion.button>
 
                     {/* Bottom status line */}
@@ -164,7 +164,7 @@ export const Intro = ({ onComplete }: { onComplete: () => void }) => {
                         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3"
                     >
                         <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-                        <span className="text-[10px] uppercase tracking-[0.25em] text-foreground/20 font-medium">
+                        <span className="text-[10px] uppercase tracking-[0.25em] text-white/30 font-medium">
                             Loading experience
                         </span>
                     </motion.div>

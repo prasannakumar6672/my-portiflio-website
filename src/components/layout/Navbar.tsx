@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTheme } from "next-themes";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -42,6 +42,7 @@ export const Navbar = () => {
     const [mounted, setMounted] = useState(false);
     const { theme } = useTheme();
     const pathname = usePathname();
+    const navRef = useRef<HTMLElement>(null);
 
     useEffect(() => {
         setMounted(true);
@@ -58,6 +59,33 @@ export const Navbar = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, [mounted]);
 
+    useEffect(() => {
+        if (!mounted) return;
+
+        const updateNavbarHeight = () => {
+            if (navRef.current) {
+                const rect = navRef.current.getBoundingClientRect();
+                document.documentElement.style.setProperty(
+                    "--navbar-height",
+                    `${rect.bottom}px`
+                );
+            }
+        };
+
+        // Run initially
+        updateNavbarHeight();
+
+        // Run on scroll and resize
+        window.addEventListener("scroll", updateNavbarHeight, { passive: true });
+        window.addEventListener("resize", updateNavbarHeight, { passive: true });
+
+        // Clean up
+        return () => {
+            window.removeEventListener("scroll", updateNavbarHeight);
+            window.removeEventListener("resize", updateNavbarHeight);
+        };
+    }, [mounted, isShrunk, mobileMenuOpen]);
+
     if (!mounted) {
         return <div className="fixed top-0 left-0 right-0 h-20 z-[50]" />;
     }
@@ -68,6 +96,7 @@ export const Navbar = () => {
         <>
             {/* ─── Desktop Floating Navbar ─── */}
             <motion.nav
+                ref={navRef}
                 initial={{ opacity: 0, y: -30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}

@@ -52,7 +52,7 @@ export default function ResumeView() {
         {/* Header Block */}
         <div className="flex flex-col md:flex-row justify-between gap-6 border-b border-white/10 print:border-slate-200 pb-8">
           <div>
-            <h1 className="text-4xl sm:text-5xl font-display font-black text-slate-900 print:text-slate-900 leading-tight">
+            <h1 className="text-4xl sm:text-5xl font-display font-black text-foreground print:text-slate-900 leading-tight">
               {personalInfo.name}
             </h1>
             <p className="text-lg font-semibold text-accent mt-2 print:text-orange-600">
