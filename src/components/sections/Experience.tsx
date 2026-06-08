@@ -305,11 +305,11 @@ export const Experience = () => {
                                     {isActive && (
                                         <motion.div
                                             layoutId="activeExperienceHighlight"
-                                            className="absolute inset-0 bg-accent rounded-xl -z-10 shadow-lg shadow-accent/25"
+                                            className="absolute inset-0 bg-accent rounded-xl z-0 shadow-lg shadow-accent/25"
                                             transition={{ type: "spring", stiffness: 380, damping: 30 }}
                                         />
                                     )}
-                                    {cat.label}
+                                    <span className="relative z-10">{cat.label}</span>
                                 </button>
                             );
                         })}
