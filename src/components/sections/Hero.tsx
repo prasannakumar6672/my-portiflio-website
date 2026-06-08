@@ -275,8 +275,7 @@ export const Hero = () => {
                         <StarOutline className="absolute top-[54%] left-[2%] lg:left-[5%] z-20 text-accent scale-75" />
                         <StarOutline className="absolute top-[45%] right-[2%] lg:right-[6%] z-20 text-slate-800 dark:text-white opacity-40 scale-100" />
 
-                        {/* Orange Sparkles */}
-                        <SparkLines className="absolute top-[37%] right-[8%] lg:right-[14%] z-20 scale-110" />
+
                     </div>
 
                     {/* ── Right Side Panel: Quote & Info Cards Stack ── */}
