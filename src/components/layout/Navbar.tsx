@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useTheme } from "next-themes";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -59,21 +59,25 @@ export const Navbar = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, [mounted]);
 
+    const updateNavbarHeight = useCallback(() => {
+        if (navRef.current) {
+            const rect = navRef.current.getBoundingClientRect();
+            document.documentElement.style.setProperty(
+                "--navbar-height",
+                `${rect.bottom}px`
+            );
+        }
+    }, []);
+
     useEffect(() => {
         if (!mounted) return;
 
-        const updateNavbarHeight = () => {
-            if (navRef.current) {
-                const rect = navRef.current.getBoundingClientRect();
-                document.documentElement.style.setProperty(
-                    "--navbar-height",
-                    `${rect.bottom}px`
-                );
-            }
-        };
-
         // Run initially
         updateNavbarHeight();
+
+        // Setup multiple timeouts to measure correctly during transitions/layout changes
+        const delays = [100, 500, 1000, 2000, 4000, 5000];
+        const timers = delays.map((delay) => setTimeout(updateNavbarHeight, delay));
 
         // Run on scroll and resize
         window.addEventListener("scroll", updateNavbarHeight, { passive: true });
@@ -81,10 +85,11 @@ export const Navbar = () => {
 
         // Clean up
         return () => {
+            timers.forEach(clearTimeout);
             window.removeEventListener("scroll", updateNavbarHeight);
             window.removeEventListener("resize", updateNavbarHeight);
         };
-    }, [mounted, isShrunk, mobileMenuOpen]);
+    }, [mounted, isShrunk, mobileMenuOpen, updateNavbarHeight]);
 
     if (!mounted) {
         return <div className="fixed top-0 left-0 right-0 h-20 z-[50]" />;
@@ -100,6 +105,7 @@ export const Navbar = () => {
                 initial={{ opacity: 0, y: -30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                onAnimationComplete={updateNavbarHeight}
                 className="fixed top-5 left-0 right-0 z-[50] flex justify-center px-4"
             >
                 <div
