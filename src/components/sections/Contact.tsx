@@ -151,7 +151,7 @@ export const Contact = () => {
                                                 required
                                                 type="text"
                                                 className="w-full bg-white dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-2xl px-5 py-3 text-sm text-slate-800 dark:text-white placeholder:text-slate-350 dark:placeholder:text-slate-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all"
-                                                placeholder="John Doe"
+                                                placeholder="Your Name"
                                             />
                                         </div>
                                         <div className="space-y-1.5">
@@ -161,7 +161,7 @@ export const Contact = () => {
                                                 required
                                                 type="email"
                                                 className="w-full bg-white dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-2xl px-5 py-3 text-sm text-slate-800 dark:text-white placeholder:text-slate-350 dark:placeholder:text-slate-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all"
-                                                placeholder="john@example.com"
+                                                placeholder="email@example.com"
                                             />
                                         </div>
                                     </div>
